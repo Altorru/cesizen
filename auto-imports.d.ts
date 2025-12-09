@@ -677,7 +677,6 @@ declare module 'vue' {
     readonly useToast: UnwrapRef<typeof import('./node_modules/@nuxt/ui/dist/runtime/composables/useToast.js')['useToast']>
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
-    readonly useTwoFactorAuth: UnwrapRef<typeof import('./resources/js/composables/useTwoFactorAuth')['useTwoFactorAuth']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
     readonly useVModel: UnwrapRef<typeof import('@vueuse/core')['useVModel']>

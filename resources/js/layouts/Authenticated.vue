@@ -20,6 +20,11 @@ const sidebarItems = computed(() => {
           icon: 'i-lucide-shield',
           to: '/admin',
         },
+        {
+          label: 'Articles',
+          icon: 'i-lucide-file-text',
+          to: '/admin/content-pages',
+        },
       ],
       [
         {
@@ -63,6 +68,11 @@ const sidebarItems = computed(() => {
           icon: 'i-lucide-layout-dashboard',
           to: '/dashboard',
         },
+        {
+          label: 'Articles',
+          icon: 'i-lucide-file-text',
+          to: '/admin/content-pages',
+        },
       ],
       [
         {
@@ -82,24 +92,7 @@ const sidebarItems = computed(() => {
           to: '/activities/emotions',
           badge: 'Soon',
         },
-      ],
-      [
-        {
-          label: 'Settings',
-          icon: 'i-lucide-settings',
-          type: 'trigger',
-          children: [
-            {
-              label: 'Profile',
-              to: '/settings/profile',
-            },
-            {
-              label: 'Security',
-              to: '/settings/security',
-            },
-          ],
-        },
-      ],
+      ]
     ] satisfies NavigationMenuItem[][]
   }
 })

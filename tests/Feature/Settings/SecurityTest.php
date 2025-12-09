@@ -1,24 +1,13 @@
 <?php
 
 use App\Models\User;
-use Laravel\Fortify\Features;
 
-test('security page is displayed', function (): void {
-    if (! Features::canManageTwoFactorAuthentication()) {
-        $this->markTestSkipped('Two-factor authentication is not enabled.');
-    }
-
-    Features::twoFactorAuthentication([
-        'confirm' => true,
-        'confirmPassword' => true,
-    ]);
-
-    $user = User::factory()->withoutTwoFactor()->create();
+test('settings page is displayed', function (): void {
+    $user = User::factory()->create();
 
     $response = $this
-        ->withSession(['auth.password_confirmed_at' => time()])
         ->actingAs($user)
-        ->get('/settings/security');
+        ->get('/settings/profile');
 
     $response->assertStatus(200);
 });
