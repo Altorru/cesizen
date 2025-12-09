@@ -6,8 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import Layout from '@/layouts/Default.vue'
-import SettingsLayout from '@/layouts/SettingsLayout.vue'
+import Layout from '@/layouts/Authenticated.vue'
 import { send } from '@/routes/verification'
 import { Head } from '@inertiajs/vue3'
 
@@ -71,7 +70,7 @@ function getInitials(name: string) {
 </script>
 
 <template>
-  <SettingsLayout>
+  <div class="container mx-auto p-6 max-w-4xl">
     <Head title="Profile settings" />
 
     <form @submit="onSubmit" class="space-y-6">
@@ -154,5 +153,5 @@ function getInitials(name: string) {
         </CardContent>
       </Card>
     </form>
-  </SettingsLayout>
+  </div>
 </template>

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import PasswordResetLinkController from '@/actions/App/Http/Controllers/Auth/PasswordResetLinkController'
+import AuthCard from '@/components/AuthCard.vue'
 import TextLink from '@/components/TextLink.vue'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import AuthLayout from '@/layouts/AuthLayout.vue'
+import Layout from '@/layouts/Empty.vue'
 import { login } from '@/routes'
 import { Form, Head } from '@inertiajs/vue3'
+
+defineOptions({ layout: Layout })
 
 defineProps<{
   status?: string
@@ -14,7 +17,7 @@ defineProps<{
 </script>
 
 <template>
-  <AuthLayout title="Forgot password" description="Enter your email to receive a password reset link">
+  <AuthCard title="Forgot password" description="Enter your email to receive a password reset link">
     <Head title="Forgot password" />
 
     <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
@@ -47,5 +50,5 @@ defineProps<{
         <TextLink :href="login()" class="text-sm font-medium text-primary">log in</TextLink>
       </div>
     </div>
-  </AuthLayout>
+  </AuthCard>
 </template>

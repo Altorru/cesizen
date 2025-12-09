@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { store } from '@/actions/App/Http/Controllers/Auth/PasswordResetLinkController'
-  import Layout from '@/layouts/AuthBasic.vue'
+  import Layout from '@/layouts/Empty.vue'
   import { router } from '@inertiajs/vue3'
   import type { FormSubmitEvent } from '@nuxt/ui'
   import * as z from 'zod'

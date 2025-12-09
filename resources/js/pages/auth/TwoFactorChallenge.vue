@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import AuthCard from '@/components/AuthCard.vue'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import AuthLayout from '@/layouts/AuthLayout.vue'
+import Layout from '@/layouts/Empty.vue'
 import { store } from '@/routes/two-factor/login'
 import { Form, Head } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
+
+defineOptions({ layout: Layout })
 
 const authConfigContent = computed<{
   title: string
@@ -39,7 +42,7 @@ const code = ref<string>('')
 </script>
 
 <template>
-  <AuthLayout :title="authConfigContent.title" :description="authConfigContent.description">
+  <AuthCard :title="authConfigContent.title" :description="authConfigContent.description">
     <Head title="Two-Factor Authentication" />
 
     <div class="space-y-6">
@@ -107,5 +110,5 @@ const code = ref<string>('')
         </Form>
       </template>
     </div>
-  </AuthLayout>
+  </AuthCard>
 </template>

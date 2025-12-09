@@ -1,0 +1,200 @@
+<script setup lang="ts">
+import type { NavigationMenuItem } from '@nuxt/ui'
+import { Link } from '@inertiajs/vue3'
+
+const page = usePage()
+const user = computed(() => page.props.auth?.user)
+const isAdmin = computed(() => user.value?.role === 'admin')
+const open = ref(false)
+
+// Sidebar items dynamiques selon le rôle
+const sidebarItems = computed(() => {
+  if (!user.value) return []
+  
+  if (isAdmin.value) {
+    // Sidebar Admin
+    return [
+      [
+        {
+          label: 'Admin Dashboard',
+          icon: 'i-lucide-shield',
+          to: '/admin',
+        },
+      ],
+      [
+        {
+          label: 'Content Management',
+          icon: 'i-lucide-file-text',
+          type: 'label',
+        },
+        {
+          label: 'All Articles',
+          icon: 'i-lucide-list',
+          to: '/admin/content-pages',
+        },
+        {
+          label: 'New Article',
+          icon: 'i-lucide-plus-circle',
+          to: '/admin/content-pages/create',
+        },
+      ],
+      [
+        {
+          label: 'User Management',
+          icon: 'i-lucide-users',
+          to: '/admin/users',
+          badge: 'Soon',
+        },
+      ],
+      [
+        {
+          label: 'Back to Site',
+          icon: 'i-lucide-arrow-left',
+          to: '/',
+        },
+      ],
+    ] satisfies NavigationMenuItem[][]
+  } else {
+    // Sidebar User
+    return [
+      [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/dashboard',
+        },
+      ],
+      [
+        {
+          label: 'Activities',
+          icon: 'i-lucide-activity',
+          type: 'label',
+        },
+        {
+          label: 'Breathing Exercise',
+          icon: 'i-lucide-wind',
+          to: '/activities/breathing',
+          badge: 'Soon',
+        },
+        {
+          label: 'Emotion Tracker',
+          icon: 'i-lucide-heart-pulse',
+          to: '/activities/emotions',
+          badge: 'Soon',
+        },
+      ],
+      [
+        {
+          label: 'Settings',
+          icon: 'i-lucide-settings',
+          type: 'trigger',
+          children: [
+            {
+              label: 'Profile',
+              to: '/settings/profile',
+            },
+            {
+              label: 'Security',
+              to: '/settings/security',
+            },
+          ],
+        },
+      ],
+    ] satisfies NavigationMenuItem[][]
+  }
+})
+</script>
+
+<template>
+  <Suspense>
+    <UApp>
+      <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <!-- Top Navbar -->
+        <header class="sticky top-0 z-50 border-b bg-white dark:bg-gray-800 shadow-sm">
+          <nav class="px-6 py-3">
+            <div class="flex items-center justify-between">
+              <!-- Left: Logo + Sidebar toggle -->
+              <div class="flex items-center gap-4">
+                <button
+                  @click="open = !open"
+                  class="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+                >
+                  <UIcon name="i-lucide-menu" class="h-5 w-5" />
+                </button>
+                
+                <Link href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                  <UIcon name="i-lucide-heart" class="h-6 w-6 text-green-600" />
+                  <span class="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
+                    CESIZen
+                  </span>
+                </Link>
+              </div>
+
+              <!-- Center: Navigation links -->
+              <div class="hidden md:flex items-center gap-6">
+                <Link
+                  href="/articles"
+                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors"
+                >
+                  Articles
+                </Link>
+                <Link
+                  :href="isAdmin ? '/admin' : '/dashboard'"
+                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors"
+                >
+                  {{ isAdmin ? 'Admin' : 'Dashboard' }}
+                </Link>
+              </div>
+
+              <!-- Right: User menu -->
+              <div class="flex items-center gap-3">
+                <UserMenu :collapsed="false" />
+              </div>
+            </div>
+          </nav>
+        </header>
+
+        <!-- Main Layout with Sidebar -->
+        <div class="flex">
+          <!-- Sidebar -->
+          <aside
+            :class="[
+              'fixed lg:sticky top-[57px] left-0 h-[calc(100vh-57px)] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-40',
+              open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+              'w-64'
+            ]"
+          >
+            <div class="flex flex-col h-full p-4">
+              <div class="flex-1 space-y-1 overflow-y-auto">
+                <UNavigationMenu 
+                  v-for="(items, index) in sidebarItems" 
+                  :key="index"
+                  :collapsed="false"
+                  :items="items" 
+                  orientation="vertical"
+                  :class="index > 0 ? 'mt-4 pt-4 border-t border-gray-200 dark:border-gray-700' : ''"
+                />
+              </div>
+              
+              <div class="pt-4 mt-auto border-t border-gray-200 dark:border-gray-700">
+                <UserMenu :collapsed="false" />
+              </div>
+            </div>
+          </aside>
+
+          <!-- Backdrop mobile -->
+          <div
+            v-if="open"
+            class="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            @click="open = false"
+          />
+
+          <!-- Main Content -->
+          <main class="flex-1 min-h-[calc(100vh-57px)]">
+            <slot />
+          </main>
+        </div>
+      </div>
+    </UApp>
+  </Suspense>
+</template>

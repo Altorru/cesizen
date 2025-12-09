@@ -3,7 +3,7 @@ import NewPasswordController from '@/actions/App/Http/Controllers/Auth/NewPasswo
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import AuthLayout from '@/layouts/AuthLayout.vue'
+import AuthLayout from '@/layouts/Empty.vue'
 import { Form, Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
@@ -16,7 +16,7 @@ const inputEmail = ref(props.email)
 </script>
 
 <template>
-  <AuthLayout title="Reset password" description="Please enter your new password below">
+  <AuthCard title="Reset password" description="Please enter your new password below">
     <Head title="Reset password" />
 
     <Form
@@ -68,5 +68,5 @@ const inputEmail = ref(props.email)
         <Button type="submit" :disabled="processing" class="mt-4 w-full">Reset Password</Button>
       </div>
     </Form>
-  </AuthLayout>
+  </AuthCard>
 </template>

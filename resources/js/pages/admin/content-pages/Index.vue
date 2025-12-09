@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AdminLayout from '@/layouts/Admin.vue'
+import AdminLayout from '@/layouts/Authenticated.vue'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -47,44 +47,34 @@ const deletePage = (id: string) => {
 </script>
 
 <template>
-  <UDashboardPanel id="admin-content-pages">
-    <template #header>
-      <UDashboardNavbar title="Content Management">
-        <template #leading>
-          <UDashboardSidebarCollapse as="button" :disabled="false" />
-        </template>
-        <template #trailing>
-          <Link href="/admin/content-pages/create">
-            <Button>
-              <UIcon name="i-lucide-plus" class="mr-2 h-4 w-4" />
-              New Article
-            </Button>
-          </Link>
-        </template>
-      </UDashboardNavbar>
-    </template>
+  <div class="p-6 space-y-6 max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          Content Management
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400">
+          Manage your articles and content pages
+        </p>
+      </div>
+      <Link href="/admin/content-pages/create">
+        <Button>
+          <UIcon name="i-lucide-plus" class="mr-2 h-4 w-4" />
+          New Article
+        </Button>
+      </Link>
+    </div>
 
-    <template #body>
-      <div class="p-6 space-y-6">
-        <!-- Header -->
-        <div>
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Content Pages
-          </h1>
-          <p class="text-gray-600 dark:text-gray-400">
-            Manage informational pages for your application.
-          </p>
-        </div>
-
-        <!-- Pages List -->
-        <Card>
-          <CardHeader>
-            <CardTitle>All Pages</CardTitle>
-            <CardDescription>
-              {{ props.pages.total }} total pages
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+    <!-- Pages List -->
+    <Card>
+      <CardHeader>
+        <CardTitle>All Pages</CardTitle>
+        <CardDescription>
+          {{ props.pages.total }} total pages
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
             <div v-if="props.pages.data.length === 0" class="text-center py-12">
               <UIcon name="i-lucide-file-text" class="mx-auto h-12 w-12 text-gray-400 mb-4" />
               <p class="text-gray-500 dark:text-gray-400 mb-4">
@@ -173,9 +163,7 @@ const deletePage = (id: string) => {
                 </Link>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    </template>
-  </UDashboardPanel>
+        </CardContent>
+      </Card>
+  </div>
 </template>

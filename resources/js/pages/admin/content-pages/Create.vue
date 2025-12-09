@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AdminLayout from '@/layouts/Admin.vue'
+import AdminLayout from '@/layouts/Authenticated.vue'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -39,38 +39,27 @@ const submit = () => {
 </script>
 
 <template>
-  <UDashboardPanel id="admin-content-pages-create">
-    <template #header>
-      <UDashboardNavbar title="Create Content Page">
-        <template #leading>
-          <UDashboardSidebarCollapse as="button" :disabled="false" />
-        </template>
-      </UDashboardNavbar>
-    </template>
+  <div class="p-6 max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        Create New Page
+      </h1>
+      <p class="text-gray-600 dark:text-gray-400">
+        Add a new informational page to your application.
+      </p>
+    </div>
 
-    <template #body>
-      <div class="p-6">
-        <div class="max-w-3xl mx-auto">
-          <!-- Header -->
-          <div class="mb-6">
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              Create New Page
-            </h1>
-            <p class="text-gray-600 dark:text-gray-400">
-              Add a new informational page to your application.
-            </p>
-          </div>
-
-          <!-- Form -->
-          <Card>
-            <CardHeader>
-              <CardTitle>Page Details</CardTitle>
-              <CardDescription>
-                Fill in the information for your content page.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form @submit.prevent="submit" class="space-y-6">
+    <!-- Form -->
+    <Card>
+      <CardHeader>
+        <CardTitle>Page Details</CardTitle>
+        <CardDescription>
+          Fill in the information for your content page.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form @submit.prevent="submit" class="space-y-6">
                 <!-- Title -->
                 <div class="space-y-2">
                   <Label for="title">Title *</Label>
@@ -172,12 +161,9 @@ const submit = () => {
                     <UIcon v-else name="i-lucide-save" class="mr-2 h-4 w-4" />
                     Create Page
                   </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
         </div>
-      </div>
-    </template>
-  </UDashboardPanel>
+      </form>
+    </CardContent>
+  </Card>
+  </div>
 </template>

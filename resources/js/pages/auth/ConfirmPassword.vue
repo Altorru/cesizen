@@ -1,14 +1,17 @@
 <script setup lang="ts">
+import AuthCard from '@/components/AuthCard.vue'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import AuthLayout from '@/layouts/AuthLayout.vue'
+import Layout from '@/layouts/Empty.vue'
 import { store } from '@/routes/password/confirm'
 import { Form, Head } from '@inertiajs/vue3'
+
+defineOptions({ layout: Layout })
 </script>
 
 <template>
-  <AuthLayout title="Confirm your password" description="This is a secure area of the application. Please confirm your password before continuing.">
+  <AuthCard title="Confirm your password" description="This is a secure area of the application. Please confirm your password before continuing.">
     <Head title="Confirm password" />
 
     <Form v-bind="store.form()" reset-on-success v-slot="{ errors, processing }">
@@ -31,5 +34,5 @@ import { Form, Head } from '@inertiajs/vue3'
         </div>
       </div>
     </Form>
-  </AuthLayout>
+  </AuthCard>
 </template>

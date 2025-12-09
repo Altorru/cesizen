@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import Layout from '@/layouts/Default.vue'
-import SettingsLayout from '@/layouts/SettingsLayout.vue'
+import Layout from '@/layouts/Authenticated.vue'
 import { Form, Head } from '@inertiajs/vue3'
 
 defineOptions({ layout: Layout })
@@ -34,7 +33,7 @@ function handleSuccess() {
 </script>
 
 <template>
-  <SettingsLayout>
+  <div class="container mx-auto p-6 max-w-4xl">
     <Head title="Security settings" />
 
     <Card class="mb-6">
@@ -90,5 +89,5 @@ function handleSuccess() {
         <DeleteAccount />
       </CardContent>
     </Card>
-  </SettingsLayout>
+  </div>
 </template>

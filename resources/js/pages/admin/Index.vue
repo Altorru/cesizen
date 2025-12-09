@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AdminLayout from '@/layouts/Admin.vue'
+import AdminLayout from '@/layouts/Authenticated.vue'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Link } from '@inertiajs/vue3'
@@ -21,28 +21,28 @@ const quickActions = [
   {
     title: 'New Article',
     description: 'Create a new content page',
-    icon: 'lucide:plus-circle',
+    icon: 'i-lucide-plus-circle',
     href: '/admin/content-pages/create',
     color: 'text-green-600 dark:text-green-400',
   },
   {
     title: 'Manage Articles',
     description: 'View and edit all articles',
-    icon: 'lucide:list',
+    icon: 'i-lucide-list',
     href: '/admin/content-pages',
     color: 'text-blue-600 dark:text-blue-400',
   },
   {
     title: 'Manage Users',
     description: 'View and manage users',
-    icon: 'lucide:users',
+    icon: 'i-lucide-users',
     href: '/admin/users',
     color: 'text-purple-600 dark:text-purple-400',
   },
   {
     title: 'View Site',
     description: 'Go to public website',
-    icon: 'lucide:external-link',
+    icon: 'i-lucide-external-link',
     href: '/',
     color: 'text-gray-600 dark:text-gray-400',
   },
@@ -50,29 +50,19 @@ const quickActions = [
 </script>
 
 <template>
-  <UDashboardPanel id="admin-dashboard">
-    <template #header>
-      <UDashboardNavbar title="Admin Dashboard">
-        <template #leading>
-          <UDashboardSidebarCollapse as="button" :disabled="false" />
-        </template>
-      </UDashboardNavbar>
-    </template>
+  <div class="p-6 space-y-8 max-w-7xl mx-auto">
+    <!-- Welcome Section -->
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        Welcome to Admin Panel
+      </h1>
+      <p class="text-gray-600 dark:text-gray-400">
+        Manage your CESIZen application content and users
+      </p>
+    </div>
 
-    <template #body>
-      <div class="p-6 space-y-8">
-        <!-- Welcome Section -->
-        <div>
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Welcome to Admin Panel
-          </h1>
-          <p class="text-gray-600 dark:text-gray-400">
-            Manage your CESIZen application content and users
-          </p>
-        </div>
-
-        <!-- Stats Grid -->
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <!-- Stats Grid -->
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader class="pb-3">
               <CardDescription>Total Articles</CardDescription>
@@ -144,7 +134,7 @@ const quickActions = [
                 <CardHeader>
                   <div class="flex items-start gap-4">
                     <div class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800">
-                      <Icon :name="action.icon" :class="['h-6 w-6', action.color]" />
+                      <UIcon :name="action.icon" :class="['h-6 w-6', action.color]" />
                     </div>
                     <div class="flex-1">
                       <CardTitle class="text-lg group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
@@ -180,6 +170,4 @@ const quickActions = [
           </CardContent>
         </Card>
       </div>
-    </template>
-  </UDashboardPanel>
 </template>

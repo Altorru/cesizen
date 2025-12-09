@@ -3,7 +3,7 @@ import { store } from '@/actions/App/Http/Controllers/Auth/RegisteredUserControl
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import Layout from '@/layouts/AuthBasic.vue'
+import Layout from '@/layouts/Empty.vue'
 import { login } from '@/routes'
 import { Head, router } from '@inertiajs/vue3'
 
