@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 
-// Layout pour les pages publiques (non connecté) avec navbar uniquement
+// Layout pour les pages publiques avec navbar adaptative selon l'état de connexion
+const page = usePage()
+const user = computed(() => page.props.auth?.user)
+const isAdmin = computed(() => user.value?.role === 'admin')
 </script>
 
 <template>
@@ -34,20 +37,34 @@ import { Link } from '@inertiajs/vue3'
                 >
                   Articles
                 </Link>
+                <Link
+                  v-if="user"
+                  :href="isAdmin ? '/admin' : '/dashboard'"
+                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors"
+                >
+                  {{ isAdmin ? 'Admin' : 'Dashboard' }}
+                </Link>
               </div>
 
-              <!-- Right: Auth buttons -->
+              <!-- Right: User menu or Auth buttons -->
               <div class="flex items-center gap-3">
-                <Link href="/login">
-                  <UButton variant="ghost" color="neutral">
-                    Log in
-                  </UButton>
-                </Link>
-                <Link href="/register">
-                  <UButton>
-                    Get Started
-                  </UButton>
-                </Link>
+                <template v-if="user">                  
+                  <!-- User Dropdown Menu -->
+                  <UserMenu :collapsed="false" />
+                </template>
+                
+                <template v-else>
+                  <Link href="/login">
+                    <UButton variant="ghost" color="neutral">
+                      Log in
+                    </UButton>
+                  </Link>
+                  <Link href="/register">
+                    <UButton>
+                      Get Started
+                    </UButton>
+                  </Link>
+                </template>
               </div>
             </div>
           </nav>
