@@ -5,6 +5,15 @@ import { Link } from '@inertiajs/vue3'
 const page = usePage()
 const user = computed(() => page.props.auth?.user)
 const isAdmin = computed(() => user.value?.role === 'admin')
+
+// Active link detection
+const currentUrl = computed(() => page.url)
+const isActive = (path: string) => {
+  if (path === '/') {
+    return currentUrl.value === '/' || currentUrl.value === ''
+  }
+  return currentUrl.value.startsWith(path)
+}
 </script>
 
 <template>
@@ -35,25 +44,55 @@ const isAdmin = computed(() => user.value?.role === 'admin')
                 <div class="hidden md:flex items-center gap-8">
                   <Link
                     href="/"
-                    class="text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 font-medium transition-all relative group"
+                    :class="[
+                      'font-medium transition-all relative group',
+                      isActive('/') 
+                        ? 'text-green-500 dark:text-green-400' 
+                        : 'text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
+                    ]"
                   >
                     Accueil
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 group-hover:w-full transition-all"></span>
+                    <span 
+                      :class="[
+                        'absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 transition-all',
+                        isActive('/') ? 'w-full' : 'w-0 group-hover:w-full'
+                      ]"
+                    ></span>
                   </Link>
                   <Link
                     href="/articles"
-                    class="text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 font-medium transition-all relative group"
+                    :class="[
+                      'font-medium transition-all relative group',
+                      isActive('/articles') 
+                        ? 'text-green-500 dark:text-green-400' 
+                        : 'text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
+                    ]"
                   >
                     Articles
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 group-hover:w-full transition-all"></span>
+                    <span 
+                      :class="[
+                        'absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 transition-all',
+                        isActive('/articles') ? 'w-full' : 'w-0 group-hover:w-full'
+                      ]"
+                    ></span>
                   </Link>
                   <Link
                     v-if="user"
                     :href="isAdmin ? '/admin' : '/dashboard'"
-                    class="text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 font-medium transition-all relative group"
+                    :class="[
+                      'font-medium transition-all relative group',
+                      isActive(isAdmin ? '/admin' : '/dashboard') 
+                        ? 'text-green-500 dark:text-green-400' 
+                        : 'text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
+                    ]"
                   >
                     {{ isAdmin ? 'Admin' : 'Tableau de Bord' }}
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 group-hover:w-full transition-all"></span>
+                    <span 
+                      :class="[
+                        'absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 transition-all',
+                        isActive(isAdmin ? '/admin' : '/dashboard') ? 'w-full' : 'w-0 group-hover:w-full'
+                      ]"
+                    ></span>
                   </Link>
                 </div>
 

@@ -92,3 +92,46 @@ html {
 .dark *:focus-visible {
   outline-color: oklch(75% 0.18 162);
 }
+
+/* Sidebar Navigation Active States */
+[data-state="active"] {
+  background-color: oklch(97% 0.05 162);
+  color: oklch(68% 0.20 162);
+  font-weight: 500;
+}
+
+.dark [data-state="active"] {
+  background-color: oklch(25% 0.08 162 / 0.3);
+  color: oklch(75% 0.18 162);
+}
+
+/* Navigation Menu Item Active State */
+.navigation-menu-item[data-active="true"],
+.navigation-menu-link[data-active="true"],
+a[data-active="true"] {
+  background-color: oklch(97% 0.05 162) !important;
+  color: oklch(68% 0.20 162) !important;
+  font-weight: 500 !important;
+  position: relative;
+}
+
+.dark .navigation-menu-item[data-active="true"],
+.dark .navigation-menu-link[data-active="true"],
+.dark a[data-active="true"] {
+  background-color: oklch(25% 0.08 162 / 0.3) !important;
+  color: oklch(75% 0.18 162) !important;
+}
+
+/* Active indicator bar for sidebar links */
+.navigation-menu-item[data-active="true"]::before,
+a[data-active="true"]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, oklch(68% 0.20 162), oklch(84% 0.18 95));
+  border-radius: 0 2px 2px 0;
+}
+
