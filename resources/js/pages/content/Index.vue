@@ -1,0 +1,141 @@
+<script setup lang="ts">
+import GuestLayout from '@/layouts/Guest.vue'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Link } from '@inertiajs/vue3'
+
+defineOptions({ layout: GuestLayout })
+
+interface ContentPage {
+  id: string
+  title: string
+  slug: string
+  content: string
+  published_at: string
+  creator: {
+    name: string
+  }
+}
+
+interface Props {
+  pages: {
+    data: ContentPage[]
+    current_page: number
+    last_page: number
+    per_page: number
+    total: number
+  }
+}
+
+const props = defineProps<Props>()
+
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+const getExcerpt = (content: string, length: number = 150) => {
+  const text = content.replace(/[#*_\[\]]/g, '')
+  return text.length > length ? text.substring(0, length) + '...' : text
+}
+
+</script>
+
+<template>
+  <Head title="Articles - CESIZen" />
+
+  <div class="container mx-auto px-6 py-12">
+    <!-- Header -->
+    <div class="mb-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+        Mental Health Articles
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+        Explore our collection of articles about stress management, mental wellness, and self-care.
+      </p>
+    </div>
+
+    <!-- Empty State -->
+    <div v-if="props.pages.data.length === 0" class="text-center py-20">
+      <div class="text-6xl mb-6">📚</div>
+      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+        No articles yet
+      </h3>
+      <p class="text-lg text-gray-600 dark:text-gray-400">
+        We're working on creating valuable content for you. Check back soon!
+      </p>
+    </div>
+
+    <!-- Articles Grid -->
+    <div v-else class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <Link
+        v-for="page in props.pages.data"
+        :key="page.id"
+        :href="`/articles/${page.slug}`"
+        class="group"
+      >
+        <Card class="h-full hover:shadow-xl transition-all hover:scale-[1.02] border-2 hover:border-green-500/50">
+          <CardHeader>
+            <div class="flex items-start justify-between mb-2">
+              <Badge variant="secondary" class="mb-2">
+                <UIcon name="i-lucide-book-open" class="mr-1 h-3 w-3" />
+                Article
+              </Badge>
+            </div>
+            <CardTitle class="text-xl group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors line-clamp-2">
+              {{ page.title }}
+            </CardTitle>
+            <CardDescription class="text-sm">
+              <UIcon name="i-lucide-calendar" class="inline h-3 w-3 mr-1" />
+              {{ formatDate(page.published_at) }}
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-4">
+            <p class="text-gray-600 dark:text-gray-400 line-clamp-3">
+              {{ getExcerpt(page.content) }}
+            </p>
+            <div class="flex items-center text-sm text-green-600 dark:text-green-400 font-medium group-hover:underline">
+              Read article
+              <UIcon name="i-lucide-arrow-right" class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+    </div>
+
+    <!-- Pagination -->
+    <div
+      v-if="props.pages.last_page > 1"
+      class="mt-12 flex items-center justify-center gap-3"
+    >
+      <Link
+        v-if="props.pages.current_page > 1"
+        :href="`/articles?page=${props.pages.current_page - 1}`"
+      >
+        <Button variant="outline">
+          <UIcon name="i-lucide-chevron-left" class="mr-2 h-4 w-4" />
+          Previous
+        </Button>
+      </Link>
+      
+      <span class="px-4 py-2 text-gray-700 dark:text-gray-300 font-medium">
+        Page {{ props.pages.current_page }} of {{ props.pages.last_page }}
+      </span>
+
+      <Link
+        v-if="props.pages.current_page < props.pages.last_page"
+        :href="`/articles?page=${props.pages.current_page + 1}`"
+      >
+        <Button variant="outline">
+          Next
+          <UIcon name="i-lucide-chevron-right" class="ml-2 h-4 w-4" />
+        </Button>
+      </Link>
+    </div>
+  </div>
+</template>
+

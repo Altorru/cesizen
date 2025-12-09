@@ -1,99 +1,191 @@
 <script setup lang="ts">
+import GuestLayout from '@/layouts/Guest.vue'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { dashboard, login, register } from '@/routes'
+import { Link } from '@inertiajs/vue3'
+
+defineOptions({ layout: GuestLayout })
 
 const page = usePage()
+const user = computed(() => page.props.auth?.user)
+const isAdmin = computed(() => user.value?.role === 'admin')
 
-// Redirect to dashboard if user is authenticated
-// if (page.props.auth.user) {
-//   router.visit(dashboard())
-// }
+
+const features = [
+  {
+    emoji: '🧘',
+    title: 'Breathing Exercises',
+    description: 'Guided breathing exercises to help you relax and reduce stress through proven techniques.',
+  },
+  {
+    emoji: '📊',
+    title: 'Emotion Tracking',
+    description: 'Keep track of your emotions and identify patterns to better understand your mental state.',
+  },
+  {
+    emoji: '📚',
+    title: 'Educational Content',
+    description: 'Access a wealth of articles and resources about mental health and stress management.',
+  },
+  {
+    emoji: '🎯',
+    title: 'Personal Dashboard',
+    description: 'Monitor your progress and see your journey towards better mental well-being.',
+  },
+  {
+    emoji: '🔒',
+    title: 'Private & Secure',
+    description: 'Your data is encrypted and protected. We respect your privacy and confidentiality.',
+  },
+  {
+    emoji: '📱',
+    title: 'Always Available',
+    description: 'Access your wellness tools anytime, anywhere, on any device.',
+  },
+]
 </script>
 
 <template>
-  <Head title="Welcome to Cesizen" />
-  
-  <div class="min-h-screen bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-900 dark:to-gray-800">
-    <!-- Header -->
-    <header class="border-b bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 dark:border-gray-700">
-      <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <span class="text-2xl font-bold text-green-600 dark:text-green-400">Cesizen</span>
-        </div>
-        
-        <div class="flex items-center gap-3">
-          <Button variant="ghost" as-child>
-            <Link :href="login()">Log in</Link>
-          </Button>
-          <Button as-child>
-            <Link :href="register()">Get Started</Link>
-          </Button>
-        </div>
-      </nav>
-    </header>
+  <Head title="Welcome to CESIZen - Your Mental Wellness Companion" />
 
-    <!-- Hero Section -->
-    <main class="container mx-auto px-6 py-20">
-      <div class="text-center max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-          Welcome to <span class="text-green-600 dark:text-green-400">Cesizen</span>
-        </h1>
-        <p class="text-xl text-gray-600 dark:text-gray-300 mb-12">
-          Your modern Laravel + Vue application built with cutting-edge technology.
+  <!-- Hero Section -->
+  <section class="container mx-auto px-6 py-20 md:py-28">
+    <div class="text-center max-w-4xl mx-auto">
+      <div class="inline-block mb-6">
+        <span class="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-sm font-medium">
+          🌟 Your Mental Wellness Journey Starts Here
+        </span>
+      </div>
+      
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+        Take Control of Your
+        <span class="bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
+          Mental Health
+        </span>
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
+        CESIZen helps you manage stress, track your emotions, and improve your mental well-being 
+        with simple, science-backed tools.
+      </p>
+
+      <div v-if="user" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Link :href="isAdmin ? '/admin' : '/dashboard'">
+          <Button size="lg" class="min-w-[200px]">
+            <UIcon :name="isAdmin ? 'i-lucide-shield' : 'i-lucide-layout-dashboard'" class="mr-2 h-5 w-5" />
+            {{ isAdmin ? 'Admin Panel' : 'Dashboard' }}
+          </Button>
+        </Link>
+        <Link href="/articles">
+          <Button size="lg" variant="outline" class="min-w-[200px]">
+            <UIcon name="i-lucide-book-open" class="mr-2 h-5 w-5" />
+            Read Articles
+          </Button>
+        </Link>
+      </div>
+      
+      <div v-else class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Link href="/register">
+          <Button size="lg" class="min-w-[200px]">
+            <UIcon name="i-lucide-sparkles" class="mr-2 h-5 w-5" />
+            Get Started Free
+          </Button>
+        </Link>
+        <Link href="/articles">
+          <Button size="lg" variant="outline" class="min-w-[200px]">
+            <UIcon name="i-lucide-book-open" class="mr-2 h-5 w-5" />
+            Browse Articles
+          </Button>
+        </Link>
+      </div>
+
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-6">
+        No credit card required • Free forever • Privacy focused
+      </p>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="bg-white dark:bg-gray-800 py-12">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">100%</div>
+          <div class="text-gray-600 dark:text-gray-400">Free to Use</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">24/7</div>
+          <div class="text-gray-600 dark:text-gray-400">Available</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">🔒</div>
+          <div class="text-gray-600 dark:text-gray-400">Secure & Private</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">✨</div>
+          <div class="text-gray-600 dark:text-gray-400">Science-Based</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="container mx-auto px-6 py-20">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Everything You Need for Mental Wellness
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Powerful tools designed to help you understand and improve your mental health
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Card v-for="(feature, index) in features" :key="index" class="hover:shadow-lg transition-shadow">
+        <CardHeader>
+          <div class="text-4xl mb-3">{{ feature.emoji }}</div>
+          <CardTitle class="text-xl">{{ feature.title }}</CardTitle>
+          <CardDescription class="text-base">
+            {{ feature.description }}
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="container mx-auto px-6 py-20">
+    <Card class="bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-700 dark:to-blue-700 border-0">
+      <CardContent class="py-16 px-6 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+          Ready to Start Your Wellness Journey?
+        </h2>
+        <p class="text-xl text-green-50 mb-8 max-w-2xl mx-auto">
+          Join CESIZen today and take the first step towards better mental health and stress management.
         </p>
-        
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button size="lg" as-child>
-            <Link :href="register()">
-              Get Started
-            </Link>
-          </Button>
-          <Button size="lg" variant="outline" as-child>
-            <Link :href="login()">
+        <div v-if="!user" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link href="/register">
+            <Button size="lg" variant="secondary" class="min-w-[200px]">
+              <UIcon name="i-lucide-sparkles" class="mr-2 h-5 w-5" />
+              Create Free Account
+            </Button>
+          </Link>
+          <Link href="/login">
+            <Button size="lg" variant="outline" class="min-w-[200px] bg-white/10 hover:bg-white/20 text-white border-white/30">
               Sign In
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
-      </div>
-
-      <!-- Features -->
-      <div class="mt-24 grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        <Card>
-          <CardHeader>
-            <div class="text-3xl mb-2">⚡</div>
-            <CardTitle>Fast & Modern</CardTitle>
-            <CardDescription>
-              Built with Laravel 12, Vue 3, and Vite for lightning-fast development.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-        
-        <Card>
-          <CardHeader>
-            <div class="text-3xl mb-2">🎨</div>
-            <CardTitle>Beautiful UI</CardTitle>
-            <CardDescription>
-              Styled with Tailwind CSS and shadcn-vue components for a polished look.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-        
-        <Card>
-          <CardHeader>
-            <div class="text-3xl mb-2">🔐</div>
-            <CardTitle>Secure</CardTitle>
-            <CardDescription>
-              Authentication powered by Laravel Fortify with 2FA support.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="container mx-auto px-6 py-8 mt-20 text-center text-gray-600 dark:text-gray-400 border-t dark:border-gray-700">
-      <p>&copy; 2025 Cesizen. Built with ❤️ using Laravel & Vue.</p>
-    </footer>
-  </div>
+        <div v-else>
+          <Link href="/dashboard">
+            <Button size="lg" variant="secondary" class="min-w-[200px]">
+              <UIcon name="i-lucide-arrow-right" class="mr-2 h-5 w-5" />
+              Continue to Dashboard
+            </Button>
+          </Link>
+        </div>
+      </CardContent>
+    </Card>
+  </section>
 </template>
+

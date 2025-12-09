@@ -2,60 +2,77 @@
   import type { NavigationMenuItem } from '@nuxt/ui'
 
   const { url } = usePage()
+  const page = usePage()
   const toast = useToast()
 
   const open = ref(false)
 
-  const links = [
-    [
-      {
-        label: 'Dashboard',
-        icon: 'i-lucide-house',
-        to: '/dashboard',
-        onSelect: () => {
-          open.value = false
+  const user = computed(() => page.props.auth.user)
+
+  const links = computed(() => {
+    const baseLinks = [
+      [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-house',
+          to: '/dashboard',
+          onSelect: () => {
+            open.value = false
+          },
         },
-      },
-      {
-        label: 'Settings',
-        to: '/settings',
-        icon: 'i-lucide-settings',
-        defaultOpen: true,
-        type: 'trigger',
-        children: [
-          {
-            label: 'Profile',
-            to: '/settings/profile',
-            exact: true,
-            onSelect: () => {
-              open.value = false
-            },
+        {
+          label: 'Articles',
+          icon: 'i-lucide-newspaper',
+          to: '/articles',
+          onSelect: () => {
+            open.value = false
           },
-          {
-            label: 'Security',
-            to: '/settings/security',
-            onSelect: () => {
-              open.value = false
+        },
+      ],
+      [
+        {
+          label: 'Settings',
+          to: '/settings',
+          icon: 'i-lucide-settings',
+          defaultOpen: true,
+          type: 'trigger',
+          children: [
+            {
+              label: 'Profile',
+              to: '/settings/profile',
+              exact: true,
+              onSelect: () => {
+                open.value = false
+              },
             },
-          },
-        ],
-      },
-    ],
-    [
-      {
-        label: 'Help & Support',
-        icon: 'i-lucide-info',
-        to: 'https://laravel.com/docs',
-        target: '_blank',
-      },
-    ],
-  ] satisfies NavigationMenuItem[][]
+            {
+              label: 'Security',
+              to: '/settings/security',
+              onSelect: () => {
+                open.value = false
+              },
+            },
+          ],
+        },
+      ],
+      [
+        {
+          label: 'Help & Support',
+          icon: 'i-lucide-info',
+          to: 'https://laravel.com/docs',
+          target: '_blank',
+        },
+      ],
+    ] satisfies NavigationMenuItem[][]
+
+    return baseLinks
+  })
 
   const groups = computed(() => [
     {
       id: 'links',
       label: 'Go to',
-      items: links.flat(),
+      items: links.value.flat(),
     },
   ])
 
@@ -108,7 +125,9 @@
 
             <UNavigationMenu :collapsed="collapsed" :items="links[0]" orientation="vertical" tooltip popover />
 
-            <UNavigationMenu :collapsed="collapsed" :items="links[1]" orientation="vertical" tooltip class="mt-auto" />
+            <UNavigationMenu :collapsed="collapsed" :items="links[1]" orientation="vertical" tooltip popover />
+
+            <UNavigationMenu :collapsed="collapsed" :items="links[2]" orientation="vertical" tooltip class="mt-auto" />
           </template>
 
           <template #footer="{ collapsed }">

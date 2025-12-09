@@ -17,6 +17,7 @@ export type UserStatus = 'subscribed' | 'unsubscribed' | 'bounced'
 export type SaleStatus = 'paid' | 'failed' | 'refunded'
 
 export interface User {
+  role: 'user' | 'admin'
   id: string
   name: string
   email: string
