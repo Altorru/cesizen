@@ -1,13 +1,14 @@
 <script setup lang="ts">
-  import EmailVerificationNotificationController from '@/actions/App/Http/Controllers/Auth/EmailVerificationNotificationController'
-  import TextLink from '@/components/TextLink.vue'
-  import AuthLayout from '@/layouts/AuthLayout.vue'
-  import { logout } from '@/routes'
-  import { Form, Head } from '@inertiajs/vue3'
+import EmailVerificationNotificationController from '@/actions/App/Http/Controllers/Auth/EmailVerificationNotificationController'
+import TextLink from '@/components/TextLink.vue'
+import { Button } from '@/components/ui/button'
+import AuthLayout from '@/layouts/AuthLayout.vue'
+import { logout } from '@/routes'
+import { Form, Head } from '@inertiajs/vue3'
 
-  defineProps<{
-    status?: string
-  }>()
+defineProps<{
+  status?: string
+}>()
 </script>
 
 <template>
@@ -19,7 +20,7 @@
     </div>
 
     <Form v-bind="EmailVerificationNotificationController.store.form()" class="space-y-6 text-center" v-slot="{ processing }">
-      <UButton :loading="processing" type="submit">Resend verification email</UButton>
+      <Button type="submit" :disabled="processing" class="w-full">Resend verification email</Button>
 
       <TextLink :href="logout()" as="button" class="mx-auto block text-sm font-medium text-primary"> Log out </TextLink>
     </Form>

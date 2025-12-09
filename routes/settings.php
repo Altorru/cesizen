@@ -18,8 +18,4 @@ Route::middleware('auth')->group(function (): void {
     Route::put('settings/password', [PasswordController::class, 'update'])
         ->middleware('throttle:6,1')
         ->name('password.update');
-
-    Route::get('settings/members', fn () => Inertia::render('settings/Members'))->name('members');
-
-    Route::get('settings/notifications', fn () => Inertia::render('settings/Notifications'))->name('notifications');
 });

@@ -1,15 +1,18 @@
 <script setup lang="ts">
-  import NewPasswordController from '@/actions/App/Http/Controllers/Auth/NewPasswordController'
-  import AuthLayout from '@/layouts/AuthLayout.vue'
-  import { Form, Head } from '@inertiajs/vue3'
-  import { ref } from 'vue'
+import NewPasswordController from '@/actions/App/Http/Controllers/Auth/NewPasswordController'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import AuthLayout from '@/layouts/AuthLayout.vue'
+import { Form, Head } from '@inertiajs/vue3'
+import { ref } from 'vue'
 
-  const props = defineProps<{
-    token: string
-    email: string
-  }>()
+const props = defineProps<{
+  token: string
+  email: string
+}>()
 
-  const inputEmail = ref(props.email)
+const inputEmail = ref(props.email)
 </script>
 
 <template>
@@ -23,19 +26,46 @@
       v-slot="{ errors, processing }"
     >
       <div class="grid gap-6">
-        <UFormField name="email" :error="errors.email" label="Email">
-          <UInput type="email" class="w-full" autocomplete="email" readonly v-model="inputEmail" />
-        </UFormField>
+        <div class="space-y-2">
+          <Label for="email">Email</Label>
+          <Input 
+            id="email"
+            name="email"
+            type="email" 
+            autocomplete="email" 
+            readonly 
+            v-model="inputEmail" 
+          />
+          <p v-if="errors.email" class="text-sm text-destructive">{{ errors.email }}</p>
+        </div>
 
-        <UFormField name="password" :error="errors.password" label="Password">
-          <UInput type="password" class="w-full" autocomplete="new-password" placeholder="Password" required />
-        </UFormField>
+        <div class="space-y-2">
+          <Label for="password">Password</Label>
+          <Input 
+            id="password"
+            name="password"
+            type="password" 
+            autocomplete="new-password" 
+            placeholder="Password" 
+            required 
+          />
+          <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
+        </div>
 
-        <UFormField name="password_confirmation" :error="errors.password_confirmation" label="Confirm Password">
-          <UInput type="password" class="w-full" autocomplete="new-password" placeholder="Confirm password" required />
-        </UFormField>
+        <div class="space-y-2">
+          <Label for="password_confirmation">Confirm Password</Label>
+          <Input 
+            id="password_confirmation"
+            name="password_confirmation"
+            type="password" 
+            autocomplete="new-password" 
+            placeholder="Confirm password" 
+            required 
+          />
+          <p v-if="errors.password_confirmation" class="text-sm text-destructive">{{ errors.password_confirmation }}</p>
+        </div>
 
-        <UButton :loading="processing" type="submit" block class="mt-4">Confirm Password</UButton>
+        <Button type="submit" :disabled="processing" class="mt-4 w-full">Reset Password</Button>
       </div>
     </Form>
   </AuthLayout>

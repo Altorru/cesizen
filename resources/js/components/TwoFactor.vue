@@ -1,53 +1,66 @@
 <script setup lang="ts">
-  import { disable } from '@/routes/two-factor'
-  import { Form } from '@inertiajs/vue3'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { disable } from '@/routes/two-factor'
+import { Form } from '@inertiajs/vue3'
+import { ShieldBan } from 'lucide-vue-next'
 
-  withDefaults(
-    defineProps<{
-      requiresConfirmation?: boolean
-      twoFactorEnabled?: boolean
-    }>(),
-    {
-      requiresConfirmation: false,
-      twoFactorEnabled: false,
-    },
-  )
+withDefaults(
+  defineProps<{
+    requiresConfirmation?: boolean
+    twoFactorEnabled?: boolean
+  }>(),
+  {
+    requiresConfirmation: false,
+    twoFactorEnabled: false,
+  },
+)
 
-  const { clearTwoFactorAuthData } = useTwoFactorAuth()
+const { clearTwoFactorAuthData } = useTwoFactorAuth()
 
-  onUnmounted(() => {
-    clearTwoFactorAuthData()
-  })
+onUnmounted(() => {
+  clearTwoFactorAuthData()
+})
 </script>
 
 <template>
-  <UPageCard title="Two-Factor Authentication" variant="subtle" description="Manage your two-factor authentication settings">
-    <div v-if="!twoFactorEnabled" class="flex flex-col items-start justify-start space-y-4">
-      <UBadge color="error">Disabled</UBadge>
-      <p class="text-muted">
-        When you enable two-factor authentication, you will be prompted for a secure pin during login. This pin can be retrieved from a TOTP-supported
-        application on your phone.
-      </p>
-      <div>
-        <TwoFactorSetupModal :requiresConfirmation="requiresConfirmation" :twoFactorEnabled="twoFactorEnabled" />
+  <Card class="mb-6">
+    <CardHeader>
+      <CardTitle>Two-Factor Authentication</CardTitle>
+      <CardDescription>Manage your two-factor authentication settings</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div v-if="!twoFactorEnabled" class="flex flex-col items-start justify-start space-y-4">
+        <Badge variant="destructive">Disabled</Badge>
+        <p class="text-muted-foreground">
+          When you enable two-factor authentication, you will be prompted for a secure pin during login. This pin can be retrieved from a TOTP-supported
+          application on your phone.
+        </p>
+        <div>
+          <TwoFactorSetupModal :requiresConfirmation="requiresConfirmation" :twoFactorEnabled="twoFactorEnabled" />
+        </div>
       </div>
-    </div>
 
-    <div v-else class="flex flex-col items-start justify-start space-y-4">
-      <UBadge>Enabled</UBadge>
+      <div v-else class="flex flex-col items-start justify-start space-y-4">
+        <Badge>Enabled</Badge>
 
-      <p class="text-muted-foreground">
-        With two-factor authentication enabled, you will be prompted for a secure, random pin during login, which you can retrieve from the
-        TOTP-supported application on your phone.
-      </p>
+        <p class="text-muted-foreground">
+          With two-factor authentication enabled, you will be prompted for a secure, random pin during login, which you can retrieve from the
+          TOTP-supported application on your phone.
+        </p>
 
-      <TwoFactorRecoveryCodes />
+        <TwoFactorRecoveryCodes />
 
-      <div class="relative inline">
-        <Form v-bind="disable.form()" #default="{ processing }">
-          <UButton color="error" icon="i-lucide-shield-ban" type="submit" :disabled="processing"> Disable 2FA </UButton>
-        </Form>
+        <div class="relative inline">
+          <Form v-bind="disable.form()" #default="{ processing }">
+            <Button variant="destructive" type="submit" :disabled="processing">
+              <ShieldBan class="mr-2 h-4 w-4" />
+              Disable 2FA
+            </Button>
+          </Form>
+        </div>
       </div>
-    </div>
-  </UPageCard>
+    </CardContent>
+  </Card>
 </template>

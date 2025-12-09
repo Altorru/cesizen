@@ -1,7 +1,10 @@
 <script setup lang="ts">
-  import AuthLayout from '@/layouts/AuthLayout.vue'
-  import { store } from '@/routes/password/confirm'
-  import { Form, Head } from '@inertiajs/vue3'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import AuthLayout from '@/layouts/AuthLayout.vue'
+import { store } from '@/routes/password/confirm'
+import { Form, Head } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -10,12 +13,21 @@
 
     <Form v-bind="store.form()" reset-on-success v-slot="{ errors, processing }">
       <div class="space-y-6">
-        <UFormField name="password" :error="errors.password" label="Password">
-          <UInput type="password" class="w-full" autocomplete="current-password" autofocus required />
-        </UFormField>
+        <div class="space-y-2">
+          <Label for="password">Password</Label>
+          <Input 
+            id="password"
+            name="password"
+            type="password" 
+            autocomplete="current-password" 
+            autofocus 
+            required 
+          />
+          <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
+        </div>
 
         <div class="flex items-center">
-          <UButton :loading="processing" type="submit" block>Confirm Password</UButton>
+          <Button type="submit" :disabled="processing" class="w-full">Confirm Password</Button>
         </div>
       </div>
     </Form>

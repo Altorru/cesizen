@@ -9,26 +9,9 @@
   const links = [
     [
       {
-        label: 'Home',
+        label: 'Dashboard',
         icon: 'i-lucide-house',
         to: '/dashboard',
-        onSelect: () => {
-          open.value = false
-        },
-      },
-      {
-        label: 'Inbox',
-        icon: 'i-lucide-inbox',
-        to: '/inbox',
-        badge: '4',
-        onSelect: () => {
-          open.value = false
-        },
-      },
-      {
-        label: 'Customers',
-        icon: 'i-lucide-users',
-        to: '/customers',
         onSelect: () => {
           open.value = false
         },
@@ -49,20 +32,6 @@
             },
           },
           {
-            label: 'Members',
-            to: '/settings/members',
-            onSelect: () => {
-              open.value = false
-            },
-          },
-          {
-            label: 'Notifications',
-            to: '/settings/notifications',
-            onSelect: () => {
-              open.value = false
-            },
-          },
-          {
             label: 'Security',
             to: '/settings/security',
             onSelect: () => {
@@ -74,15 +43,9 @@
     ],
     [
       {
-        label: 'Feedback',
-        icon: 'i-lucide-message-circle',
-        to: 'https://github.com/nuxt-ui-pro/dashboard-vue',
-        target: '_blank',
-      },
-      {
         label: 'Help & Support',
         icon: 'i-lucide-info',
-        to: 'https://github.com/nuxt/ui-pro',
+        to: 'https://laravel.com/docs',
         target: '_blank',
       },
     ],
@@ -93,19 +56,6 @@
       id: 'links',
       label: 'Go to',
       items: links.flat(),
-    },
-    {
-      id: 'code',
-      label: 'Code',
-      items: [
-        {
-          id: 'source',
-          label: 'View page source',
-          icon: 'simple-icons:github',
-          to: `https://github.com/nuxt-ui-pro/dashboard-vue/blob/main/src/pages${url === '/' ? '/index' : url}.vue`,
-          target: '_blank',
-        },
-      ],
     },
   ])
 
@@ -147,7 +97,10 @@
           :ui="{ footer: 'lg:border-t lg:border-default' }"
         >
           <template #header="{ collapsed }">
-            <TeamsMenu :collapsed="collapsed" />
+            <div class="flex items-center gap-2 px-3 py-4">
+              <AppLogoIcon v-if="collapsed" class="size-8" />
+              <AppLogo v-else class="h-8" />
+            </div>
           </template>
 
           <template #default="{ collapsed }">
@@ -166,8 +119,6 @@
         <UDashboardSearch :groups="groups" />
 
         <slot />
-
-        <NotificationsSlideover />
       </UDashboardGroup>
     </UApp>
   </Suspense>

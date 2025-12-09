@@ -1,13 +1,16 @@
 <script setup lang="ts">
-  import PasswordResetLinkController from '@/actions/App/Http/Controllers/Auth/PasswordResetLinkController'
-  import TextLink from '@/components/TextLink.vue'
-  import AuthLayout from '@/layouts/AuthLayout.vue'
-  import { login } from '@/routes'
-  import { Form, Head } from '@inertiajs/vue3'
+import PasswordResetLinkController from '@/actions/App/Http/Controllers/Auth/PasswordResetLinkController'
+import TextLink from '@/components/TextLink.vue'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import AuthLayout from '@/layouts/AuthLayout.vue'
+import { login } from '@/routes'
+import { Form, Head } from '@inertiajs/vue3'
 
-  defineProps<{
-    status?: string
-  }>()
+defineProps<{
+  status?: string
+}>()
 </script>
 
 <template>
@@ -20,17 +23,27 @@
 
     <div class="space-y-6">
       <Form v-bind="PasswordResetLinkController.store.form()" v-slot="{ errors, processing }">
-        <UFormField name="email" :error="errors.email" label="Email address">
-          <UInput type="email" class="w-full" autocomplete="off" placeholder="email@example.com" autofocus required />
-        </UFormField>
+        <div class="space-y-2">
+          <Label for="email">Email address</Label>
+          <Input 
+            id="email"
+            name="email" 
+            type="email" 
+            autocomplete="off" 
+            placeholder="email@example.com" 
+            autofocus 
+            required 
+          />
+          <p v-if="errors.email" class="text-sm text-destructive">{{ errors.email }}</p>
+        </div>
 
         <div class="my-6 flex items-center justify-start">
-          <UButton :loading="processing" type="submit" block>Confirm Password</UButton>
+          <Button type="submit" :disabled="processing" class="w-full">Send Reset Link</Button>
         </div>
       </Form>
 
       <div class="text-muted-foreground space-x-1 text-center text-sm">
-        <span class="text-muted">Or, return to</span>
+        <span class="text-muted-foreground">Or, return to</span>
         <TextLink :href="login()" class="text-sm font-medium text-primary">log in</TextLink>
       </div>
     </div>
