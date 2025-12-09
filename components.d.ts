@@ -43,7 +43,6 @@ declare module 'vue' {
     SettingsMembersList: typeof import('./resources/js/components/settings/SettingsMembersList.vue')['default']
     Textarea: typeof import('./resources/js/components/ui/textarea/Textarea.vue')['default']
     TextLink: typeof import('./resources/js/components/TextLink.vue')['default']
-    UAlert: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Alert.vue')['default']
     UApp: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/App.vue')['default']
     UAuthForm: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/AuthForm.vue')['default']
     UButton: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']

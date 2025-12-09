@@ -16,8 +16,8 @@ defineProps<{
 </script>
 
 <template>
-  <AuthCard title="Forgot password?" description="No worries, we'll send you reset instructions">
-    <Head title="Forgot password" />
+  <AuthCard title="Mot de passe oublié ?" description="Pas de souci, nous vous enverrons des instructions de réinitialisation">
+    <Head title="Mot de passe oublié" />
 
     <div v-if="status" class="mb-4 p-3 text-center text-sm font-medium text-green-700 bg-green-50 dark:bg-green-900/20 dark:text-green-400 rounded-lg">
       {{ status }}
@@ -26,28 +26,28 @@ defineProps<{
     <Form v-bind="PasswordResetLinkController.store.form()" v-slot="{ errors, processing }" class="space-y-6">
       <div class="space-y-4">
         <div class="space-y-2">
-          <Label for="email">Email address</Label>
+          <Label for="email">Adresse e-mail</Label>
           <Input 
             id="email"
             name="email" 
             type="email" 
             autocomplete="email" 
-            placeholder="email@example.com" 
+            placeholder="email@exemple.com" 
             autofocus 
             required 
           />
           <p v-if="errors.email" class="text-sm text-destructive">{{ errors.email }}</p>
         </div>
 
-        <Button type="submit" :disabled="processing" class="w-full">
-          Send Reset Link
+        <Button type="submit" :disabled="processing" class="w-full bg-green-500 hover:bg-green-600">
+          Envoyer le Lien de Réinitialisation
         </Button>
       </div>
 
       <div class="text-center text-sm text-muted-foreground">
-        Remember your password?
-        <Link :href="login()" class="text-primary hover:underline font-medium">
-          Back to log in
+        Vous vous souvenez de votre mot de passe ?
+        <Link :href="login()" class="text-green-600 hover:text-green-700 hover:underline font-medium">
+          Retour à la connexion
         </Link>
       </div>
     </Form>

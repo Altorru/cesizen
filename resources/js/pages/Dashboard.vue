@@ -11,27 +11,27 @@ const user = computed(() => page.props.auth.user)
 
 const quickLinks = [
   {
-    title: 'Browse Articles',
-    description: 'Read our mental health articles',
+    title: 'Parcourir les Articles',
+    description: 'Lire nos articles sur la santé mentale',
     icon: 'i-lucide-book-open',
     href: '/articles',
-    color: 'text-green-600 dark:text-green-400',
+    color: 'text-green-500 dark:text-green-400',
   },
   {
-    title: 'Breathing Exercise',
-    description: 'Practice mindful breathing',
+    title: 'Exercice de Respiration',
+    description: 'Pratiquer la respiration en pleine conscience',
     icon: 'i-lucide-wind',
     href: '/activities/breathing',
     color: 'text-blue-600 dark:text-blue-400',
-    badge: 'Soon',
+    badge: 'Bientôt',
   },
   {
-    title: 'Emotion Tracker',
-    description: 'Track your emotional wellness',
+    title: 'Suivi des Émotions',
+    description: 'Suivez votre bien-être émotionnel',
     icon: 'i-lucide-heart-pulse',
     href: '/activities/emotions',
     color: 'text-purple-600 dark:text-purple-400',
-    badge: 'Soon',
+    badge: 'Bientôt',
   },
 ]
 </script>
@@ -41,31 +41,31 @@ const quickLinks = [
     <!-- Welcome Section -->
     <div>
       <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-        Welcome back, {{ user.name }}!
+        Bon retour, {{ user.name }} !
       </h1>
       <p class="text-gray-600 dark:text-gray-400">
-        Manage your wellness journey from here
+        Gérez votre parcours de bien-être depuis ici
       </p>
     </div>
 
     <!-- Account Info Card -->
     <Card>
       <CardHeader>
-        <CardTitle>Your Account</CardTitle>
-        <CardDescription>Personal information and account details</CardDescription>
+        <CardTitle>Votre Compte</CardTitle>
+        <CardDescription>Informations personnelles et détails du compte</CardDescription>
       </CardHeader>
       <CardContent class="grid md:grid-cols-3 gap-6">
         <div>
-          <p class="text-sm text-muted-foreground mb-1">Name</p>
+          <p class="text-sm text-muted-foreground mb-1">Nom</p>
           <p class="font-medium text-lg">{{ user.name }}</p>
         </div>
         <div>
-          <p class="text-sm text-muted-foreground mb-1">Email</p>
+          <p class="text-sm text-muted-foreground mb-1">E-mail</p>
           <p class="font-medium text-lg">{{ user.email }}</p>
         </div>
         <div>
-          <p class="text-sm text-muted-foreground mb-1">Account Type</p>
-          <p class="font-medium text-lg">Standard User</p>
+          <p class="text-sm text-muted-foreground mb-1">Type de Compte</p>
+          <p class="font-medium text-lg">Utilisateur Standard</p>
         </div>
       </CardContent>
     </Card>
@@ -73,7 +73,7 @@ const quickLinks = [
     <!-- Quick Activities -->
     <div>
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-        Your Activities
+        Vos Activités
       </h2>
       <div class="grid gap-4 md:grid-cols-3">
         <Link
@@ -84,19 +84,19 @@ const quickLinks = [
         >
           <Card class="hover:shadow-lg transition-shadow cursor-pointer h-full relative overflow-hidden">
             <CardHeader>
-              <div class="flex items-start gap-4">
-                <div class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800">
-                  <UIcon :name="link.icon" :class="['h-6 w-6', link.color]" />
-                </div>
-                <div class="flex-1">
-                  <div class="flex items-center gap-2">
-                    <CardTitle class="text-lg group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                      {{ link.title }}
-                    </CardTitle>
-                    <span v-if="link.badge" class="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded-full">
-                      {{ link.badge }}
-                    </span>
+                <div class="flex items-start gap-4">
+                  <div class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800">
+                    <UIcon :name="link.icon" :class="['h-6 w-6', link.color]" />
                   </div>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2">
+                      <CardTitle class="text-lg group-hover:text-green-500 dark:group-hover:text-green-400 transition-colors">
+                        {{ link.title }}
+                      </CardTitle>
+                      <span v-if="link.badge" class="px-2 py-0.5 text-xs font-medium bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300 rounded-full">
+                        {{ link.badge }}
+                      </span>
+                    </div>
                   <CardDescription class="mt-1">
                     {{ link.description }}
                   </CardDescription>

@@ -18,8 +18,8 @@ defineProps<{
 </script>
 
 <template>
-  <AuthCard title="Welcome back" description="Enter your credentials to access your account">
-    <Head title="Log in" />
+  <AuthCard title="Bon retour" description="Entrez vos identifiants pour accéder à votre compte">
+    <Head title="Connexion" />
 
     <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600 dark:text-green-400">
       {{ status }}
@@ -33,13 +33,13 @@ defineProps<{
     >
       <div class="space-y-4">
         <div class="space-y-2">
-          <Label for="email">Email address</Label>
+          <Label for="email">Adresse e-mail</Label>
           <Input 
             id="email"
             name="email"
             type="email" 
             autocomplete="email" 
-            placeholder="email@example.com" 
+            placeholder="email@exemple.com" 
             autofocus 
             required 
           />
@@ -48,9 +48,9 @@ defineProps<{
 
         <div class="space-y-2">
           <div class="flex items-center justify-between">
-            <Label for="password">Password</Label>
-            <Link v-if="canResetPassword" :href="request()" class="text-sm text-primary hover:underline">
-              Forgot password?
+            <Label for="password">Mot de passe</Label>
+            <Link v-if="canResetPassword" :href="request()" class="text-sm text-green-600 hover:text-green-700 hover:underline">
+              Mot de passe oublié ?
             </Link>
           </div>
           <Input 
@@ -69,20 +69,20 @@ defineProps<{
             id="remember" 
             name="remember" 
             type="checkbox" 
-            class="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-600 focus:ring-offset-0"
+            class="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500 focus:ring-offset-0"
           />
-          <Label for="remember" class="text-sm font-normal cursor-pointer">Remember me</Label>
+          <Label for="remember" class="text-sm font-normal cursor-pointer">Se souvenir de moi</Label>
         </div>
 
-        <Button :disabled="processing" type="submit" class="w-full">
-          Log in
+        <Button :disabled="processing" type="submit" class="w-full bg-green-500 hover:bg-green-600">
+          Se connecter
         </Button>
       </div>
 
       <div class="text-center text-sm text-muted-foreground">
-        Don't have an account?
-        <Link :href="register()" class="text-primary hover:underline font-medium">
-          Sign up
+        Vous n'avez pas de compte ?
+        <Link :href="register()" class="text-green-600 hover:text-green-700 hover:underline font-medium">
+          S'inscrire
         </Link>
       </div>
     </Form>

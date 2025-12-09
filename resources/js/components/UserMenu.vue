@@ -29,18 +29,18 @@
     ],
     [
       {
-        label: 'Settings',
+        label: 'Paramètres',
         icon: 'i-lucide-settings',
         to: '/settings/profile',
       },
     ],
     [
       {
-        label: 'Appearance',
+        label: 'Apparence',
         icon: 'i-lucide-sun-moon',
         children: [
           {
-            label: 'Light',
+            label: 'Clair',
             icon: 'i-lucide-sun',
             type: 'checkbox',
             checked: colorMode.value === 'light',
@@ -51,7 +51,7 @@
             },
           },
           {
-            label: 'Dark',
+            label: 'Sombre',
             icon: 'i-lucide-moon',
             type: 'checkbox',
             checked: colorMode.value === 'dark',
@@ -69,7 +69,7 @@
     ],
     [
       {
-        label: 'Log out',
+        label: 'Déconnexion',
         icon: 'i-lucide-log-out',
         to: logout(),
         onSelect: () => handleLogout(),

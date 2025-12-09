@@ -33,18 +33,18 @@ function onSubmit(e: Event) {
 </script>
 
 <template>
-  <AuthCard title="Create an account" description="Start your wellness journey today">
-    <Head title="Register" />
+  <AuthCard title="Créer un compte" description="Commencez votre voyage vers le bien-être dès aujourd'hui">
+    <Head title="Inscription" />
 
     <form @submit="onSubmit" class="space-y-6">
       <div class="space-y-4">
         <div class="space-y-2">
-          <Label for="name">Full name</Label>
+          <Label for="name">Nom complet</Label>
           <Input 
             id="name"
             v-model="form.name"
             type="text" 
-            placeholder="John Doe"
+            placeholder="Jean Dupont"
             autofocus
             required 
           />
@@ -52,19 +52,19 @@ function onSubmit(e: Event) {
         </div>
 
         <div class="space-y-2">
-          <Label for="email">Email address</Label>
+          <Label for="email">Adresse e-mail</Label>
           <Input 
             id="email"
             v-model="form.email"
             type="email" 
-            placeholder="email@example.com"
+            placeholder="email@exemple.com"
             required 
           />
           <p v-if="errors.email" class="text-sm text-destructive">{{ errors.email }}</p>
         </div>
 
         <div class="space-y-2">
-          <Label for="password">Password</Label>
+          <Label for="password">Mot de passe</Label>
           <Input 
             id="password"
             v-model="form.password"
@@ -73,18 +73,18 @@ function onSubmit(e: Event) {
             required 
           />
           <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
-          <p class="text-xs text-muted-foreground">Must be at least 8 characters</p>
+          <p class="text-xs text-muted-foreground">Doit contenir au moins 8 caractères</p>
         </div>
 
-        <Button :disabled="form.processing" type="submit" class="w-full">
-          Create account
+        <Button :disabled="form.processing" type="submit" class="w-full bg-green-500 hover:bg-green-600">
+          Créer mon compte
         </Button>
       </div>
 
       <div class="text-center text-sm text-muted-foreground">
-        Already have an account?
-        <Link :href="login()" class="text-primary hover:underline font-medium">
-          Log in
+        Vous avez déjà un compte ?
+        <Link :href="login()" class="text-green-600 hover:text-green-700 hover:underline font-medium">
+          Se connecter
         </Link>
       </div>
     </form>

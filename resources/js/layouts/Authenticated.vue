@@ -16,7 +16,7 @@ const sidebarItems = computed(() => {
     return [
       [
         {
-          label: 'Admin Dashboard',
+          label: 'Tableau de Bord Admin',
           icon: 'i-lucide-shield',
           to: '/admin',
         },
@@ -28,32 +28,32 @@ const sidebarItems = computed(() => {
       ],
       [
         {
-          label: 'Content Management',
+          label: 'Gestion du Contenu',
           icon: 'i-lucide-file-text',
           type: 'label',
         },
         {
-          label: 'All Articles',
+          label: 'Tous les Articles',
           icon: 'i-lucide-list',
           to: '/admin/content-pages',
         },
         {
-          label: 'New Article',
+          label: 'Nouvel Article',
           icon: 'i-lucide-plus-circle',
           to: '/admin/content-pages/create',
         },
       ],
       [
         {
-          label: 'User Management',
+          label: 'Gestion des Utilisateurs',
           icon: 'i-lucide-users',
           to: '/admin/users',
-          badge: 'Soon',
+          badge: 'Bientôt',
         },
       ],
       [
         {
-          label: 'Back to Site',
+          label: 'Retour au Site',
           icon: 'i-lucide-arrow-left',
           to: '/',
         },
@@ -64,7 +64,7 @@ const sidebarItems = computed(() => {
     return [
       [
         {
-          label: 'Dashboard',
+          label: 'Tableau de Bord',
           icon: 'i-lucide-layout-dashboard',
           to: '/dashboard',
         },
@@ -76,21 +76,21 @@ const sidebarItems = computed(() => {
       ],
       [
         {
-          label: 'Activities',
+          label: 'Activités',
           icon: 'i-lucide-activity',
           type: 'label',
         },
         {
-          label: 'Breathing Exercise',
+          label: 'Exercice de Respiration',
           icon: 'i-lucide-wind',
           to: '/activities/breathing',
-          badge: 'Soon',
+          badge: 'Bientôt',
         },
         {
-          label: 'Emotion Tracker',
+          label: 'Suivi des Émotions',
           icon: 'i-lucide-heart-pulse',
           to: '/activities/emotions',
-          badge: 'Soon',
+          badge: 'Bientôt',
         },
       ]
     ] satisfies NavigationMenuItem[][]
@@ -117,10 +117,10 @@ const sidebarItems = computed(() => {
                 
                 <Link href="/" class="flex items-center gap-2 group">
                   <div class="relative">
-                    <div class="absolute inset-0 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-sm group-hover:blur-md transition-all"></div>
-                    <UIcon name="i-lucide-heart" class="relative h-6 w-6 text-green-600 dark:text-green-400" />
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-400/20 to-yellow-300/20 rounded-full blur-sm group-hover:blur-md transition-all"></div>
+                    <img src="/images/logo.png" alt="CESIZen" class="relative h-7 w-7 object-contain" />
                   </div>
-                  <span class="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
+                  <span class="text-xl font-bold bg-gradient-to-r from-green-500 to-yellow-400 dark:from-green-400 dark:to-yellow-300 bg-clip-text text-transparent">
                     CESIZen
                   </span>
                 </Link>
@@ -130,17 +130,17 @@ const sidebarItems = computed(() => {
               <div class="hidden md:flex items-center gap-8">
                 <Link
                   href="/articles"
-                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-all relative group"
+                  class="text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 font-medium transition-all relative group"
                 >
                   Articles
-                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-blue-600 group-hover:w-full transition-all"></span>
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 group-hover:w-full transition-all"></span>
                 </Link>
                 <Link
                   :href="isAdmin ? '/admin' : '/dashboard'"
-                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-all relative group"
+                  class="text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 font-medium transition-all relative group"
                 >
-                  {{ isAdmin ? 'Admin' : 'Dashboard' }}
-                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-blue-600 group-hover:w-full transition-all"></span>
+                  {{ isAdmin ? 'Admin' : 'Tableau de Bord' }}
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 group-hover:w-full transition-all"></span>
                 </Link>
               </div>
 

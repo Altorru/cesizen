@@ -43,8 +43,8 @@ async function onSubmit(e: Event) {
   form.submit(update())
 
   toast.add({
-    title: 'Success',
-    description: 'Your profile has been updated.',
+    title: 'Succès',
+    description: 'Votre profil a été mis à jour.',
     icon: 'i-lucide-check',
     color: 'success',
   })
@@ -52,8 +52,8 @@ async function onSubmit(e: Event) {
 
 function handlePasswordSuccess() {
   toast.add({
-    title: 'Success',
-    description: 'Your password has been updated.',
+    title: 'Succès',
+    description: 'Votre mot de passe a été mis à jour.',
     icon: 'i-lucide-check',
     color: 'success',
   })
@@ -81,62 +81,62 @@ function getInitials(name: string) {
 
 <template>
   <div class="container mx-auto p-6 max-w-4xl space-y-8">
-    <Head title="Settings" />
+    <Head title="Paramètres" />
 
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Settings</h1>
-      <p class="text-muted-foreground">Manage your account settings and preferences</p>
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Paramètres</h1>
+      <p class="text-muted-foreground">Gérez les paramètres et préférences de votre compte</p>
     </div>
 
     <!-- Profile Section -->
     <form @submit="onSubmit" class="space-y-6">
       <Card class="border-0 shadow-lg">
         <CardHeader>
-          <CardTitle class="text-xl">Profile Information</CardTitle>
-          <CardDescription>Update your account's profile information and email address.</CardDescription>
+          <CardTitle class="text-xl">Informations du Profil</CardTitle>
+          <CardDescription>Mettez à jour les informations de votre profil et votre adresse e-mail.</CardDescription>
         </CardHeader>
         <CardContent class="space-y-6">
           <div class="space-y-2">
-            <Label for="name">Name</Label>
+            <Label for="name">Nom</Label>
             <Input 
               id="name"
               v-model="profile.name" 
               autocomplete="off"
-              placeholder="Your full name"
+              placeholder="Votre nom complet"
               required
             />
             <p class="text-sm text-muted-foreground">
-              This is your public display name.
+              C'est votre nom d'affichage public.
             </p>
           </div>
 
           <Separator />
 
           <div class="space-y-2">
-            <Label for="email">Email address</Label>
+            <Label for="email">Adresse e-mail</Label>
             <Input 
               id="email"
               v-model="profile.email" 
               type="email"
               autocomplete="off"
-              placeholder="email@example.com"
+              placeholder="email@exemple.com"
               required
             />
             <p class="text-sm text-muted-foreground">
-              Used to sign in and receive notifications.
+              Utilisée pour la connexion et recevoir des notifications.
             </p>
             
             <div v-if="mustVerifyEmail && !auth.user.email_verified_at" class="mt-2">
               <p class="text-sm text-muted-foreground">
-                Your email address is unverified.
-                <Link :href="send()" class="font-medium text-primary hover:underline">
-                  Click here to resend the verification email.
+                Votre adresse e-mail n'est pas vérifiée.
+                <Link :href="send()" class="font-medium text-green-600 hover:text-green-700 hover:underline">
+                  Cliquez ici pour renvoyer l'e-mail de vérification.
                 </Link>
               </p>
             </div>
 
             <div v-if="status === 'verification-link-sent'" class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
-              A new verification link has been sent to your email address.
+              Un nouveau lien de vérification a été envoyé à votre adresse e-mail.
             </div>
           </div>
 
@@ -150,10 +150,10 @@ function getInitials(name: string) {
                 <AvatarFallback class="text-lg">{{ getInitials(profile.name) }}</AvatarFallback>
               </Avatar>
               <div>
-                <Button type="button" variant="outline" @click="onFileClick">
-                  Choose file
+                <Button type="button" variant="outline" @click="onFileClick" class="border-green-500 text-green-600 hover:bg-green-50">
+                  Choisir un fichier
                 </Button>
-                <p class="text-sm text-muted-foreground mt-1">JPG, GIF or PNG. 1MB Max.</p>
+                <p class="text-sm text-muted-foreground mt-1">JPG, GIF ou PNG. 1 Mo max.</p>
                 <input 
                   ref="fileRef" 
                   type="file" 
@@ -166,8 +166,8 @@ function getInitials(name: string) {
           </div>
 
           <div class="flex justify-end">
-            <Button type="submit" :disabled="form.processing">
-              Save Changes
+            <Button type="submit" :disabled="form.processing" class="bg-green-500 hover:bg-green-600">
+              Enregistrer les Modifications
             </Button>
           </div>
         </CardContent>
@@ -177,8 +177,8 @@ function getInitials(name: string) {
     <!-- Password Section -->
     <Card class="border-0 shadow-lg">
       <CardHeader>
-        <CardTitle class="text-xl">Change Password</CardTitle>
-        <CardDescription>Ensure your account is using a strong password to stay secure.</CardDescription>
+        <CardTitle class="text-xl">Changer le Mot de Passe</CardTitle>
+        <CardDescription>Assurez-vous que votre compte utilise un mot de passe robuste pour rester sécurisé.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form
@@ -193,7 +193,7 @@ function getInitials(name: string) {
           @success="handlePasswordSuccess"
         >
           <div class="space-y-2">
-            <Label for="current_password">Current Password</Label>
+            <Label for="current_password">Mot de Passe Actuel</Label>
             <Input 
               id="current_password" 
               name="current_password" 
@@ -205,7 +205,7 @@ function getInitials(name: string) {
           </div>
 
           <div class="space-y-2">
-            <Label for="password">New Password</Label>
+            <Label for="password">Nouveau Mot de Passe</Label>
             <Input 
               id="password" 
               name="password" 
@@ -214,11 +214,11 @@ function getInitials(name: string) {
               autocomplete="new-password"
             />
             <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
-            <p class="text-xs text-muted-foreground">Must be at least 8 characters</p>
+            <p class="text-xs text-muted-foreground">Doit contenir au moins 8 caractères</p>
           </div>
 
           <div class="space-y-2">
-            <Label for="password_confirmation">Confirm Password</Label>
+            <Label for="password_confirmation">Confirmer le Mot de Passe</Label>
             <Input 
               id="password_confirmation" 
               name="password_confirmation" 
@@ -229,8 +229,8 @@ function getInitials(name: string) {
             <p v-if="errors.password_confirmation" class="text-sm text-destructive">{{ errors.password_confirmation }}</p>
           </div>
 
-          <Button type="submit" :disabled="processing">
-            Update Password
+          <Button type="submit" :disabled="processing" class="bg-green-500 hover:bg-green-600">
+            Mettre à Jour le Mot de Passe
           </Button>
         </Form>
       </CardContent>
@@ -239,9 +239,9 @@ function getInitials(name: string) {
     <!-- Delete Account Section -->
     <Card class="border-0 shadow-lg bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/10 dark:to-orange-900/10">
       <CardHeader>
-        <CardTitle class="text-xl text-red-700 dark:text-red-400">Delete Account</CardTitle>
+        <CardTitle class="text-xl text-red-700 dark:text-red-400">Supprimer le Compte</CardTitle>
         <CardDescription>
-          Permanently delete your account and all of its data. This action cannot be undone.
+          Supprimez définitivement votre compte et toutes ses données. Cette action est irréversible.
         </CardDescription>
       </CardHeader>
       <CardContent>
