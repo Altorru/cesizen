@@ -11,27 +11,26 @@ defineOptions({ layout: Layout })
 </script>
 
 <template>
-  <AuthCard title="Confirm your password" description="This is a secure area of the application. Please confirm your password before continuing.">
+  <AuthCard title="Confirm your password" description="This is a secure area. Please confirm your password to continue.">
     <Head title="Confirm password" />
 
-    <Form v-bind="store.form()" reset-on-success v-slot="{ errors, processing }">
-      <div class="space-y-6">
+    <Form v-bind="store.form()" reset-on-success v-slot="{ errors, processing }" class="space-y-6">
+      <div class="space-y-4">
         <div class="space-y-2">
           <Label for="password">Password</Label>
           <Input 
             id="password"
             name="password"
             type="password" 
-            autocomplete="current-password" 
+            autocomplete="current-password"
+            placeholder="••••••••" 
             autofocus 
             required 
           />
           <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
         </div>
 
-        <div class="flex items-center">
-          <Button type="submit" :disabled="processing" class="w-full">Confirm Password</Button>
-        </div>
+        <Button type="submit" :disabled="processing" class="w-full">Confirm</Button>
       </div>
     </Form>
   </AuthCard>

@@ -19,3 +19,63 @@
 .dark {
   --ui-primary: var(--ui-color-primary-500);
 }
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animations for a more soothing experience */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Prose styling for articles - more readable and calming */
+.prose {
+  line-height: 1.8;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  color: oklch(58.426% 0.10793 160.73);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3 {
+  color: oklch(74.927% 0.11835 162.26);
+}
+
+.prose p {
+  margin-bottom: 1.25em;
+}
+
+/* Focus states for better accessibility */
+*:focus-visible {
+  outline: 2px solid oklch(58.426% 0.10793 160.73);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.dark *:focus-visible {
+  outline-color: oklch(74.927% 0.11835 162.26);
+}

@@ -108,22 +108,25 @@ const sidebarItems = computed(() => {
 <template>
   <Suspense>
     <UApp>
-      <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
         <!-- Top Navbar -->
-        <header class="sticky top-0 z-50 border-b bg-white dark:bg-gray-800 shadow-sm">
-          <nav class="px-6 py-3">
+        <header class="sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-800/50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-sm">
+          <nav class="px-6 py-4">
             <div class="flex items-center justify-between">
               <!-- Left: Logo + Sidebar toggle -->
               <div class="flex items-center gap-4">
                 <button
                   @click="open = !open"
-                  class="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+                  class="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                 >
                   <UIcon name="i-lucide-menu" class="h-5 w-5" />
                 </button>
                 
-                <Link href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                  <UIcon name="i-lucide-heart" class="h-6 w-6 text-green-600" />
+                <Link href="/" class="flex items-center gap-2 group">
+                  <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-sm group-hover:blur-md transition-all"></div>
+                    <UIcon name="i-lucide-heart" class="relative h-6 w-6 text-green-600 dark:text-green-400" />
+                  </div>
                   <span class="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
                     CESIZen
                   </span>
@@ -131,18 +134,20 @@ const sidebarItems = computed(() => {
               </div>
 
               <!-- Center: Navigation links -->
-              <div class="hidden md:flex items-center gap-6">
+              <div class="hidden md:flex items-center gap-8">
                 <Link
                   href="/articles"
-                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors"
+                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-all relative group"
                 >
                   Articles
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-blue-600 group-hover:w-full transition-all"></span>
                 </Link>
                 <Link
                   :href="isAdmin ? '/admin' : '/dashboard'"
-                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors"
+                  class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-all relative group"
                 >
                   {{ isAdmin ? 'Admin' : 'Dashboard' }}
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-blue-600 group-hover:w-full transition-all"></span>
                 </Link>
               </div>
 
@@ -159,7 +164,7 @@ const sidebarItems = computed(() => {
           <!-- Sidebar -->
           <aside
             :class="[
-              'fixed lg:sticky top-[57px] left-0 h-[calc(100vh-57px)] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-40',
+              'fixed lg:sticky top-[73px] left-0 h-[calc(100vh-73px)] bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-r border-gray-200/50 dark:border-gray-800/50 transition-all duration-300 z-40',
               open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
               'w-64'
             ]"
@@ -172,12 +177,8 @@ const sidebarItems = computed(() => {
                   :collapsed="false"
                   :items="items" 
                   orientation="vertical"
-                  :class="index > 0 ? 'mt-4 pt-4 border-t border-gray-200 dark:border-gray-700' : ''"
+                  :class="index > 0 ? 'mt-4 pt-4 border-t border-gray-200/50 dark:border-gray-800/50' : ''"
                 />
-              </div>
-              
-              <div class="pt-4 mt-auto border-t border-gray-200 dark:border-gray-700">
-                <UserMenu :collapsed="false" />
               </div>
             </div>
           </aside>
@@ -185,12 +186,12 @@ const sidebarItems = computed(() => {
           <!-- Backdrop mobile -->
           <div
             v-if="open"
-            class="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 lg:hidden"
             @click="open = false"
           />
 
           <!-- Main Content -->
-          <main class="flex-1 min-h-[calc(100vh-57px)]">
+          <main class="flex-1 min-h-[calc(100vh-73px)]">
             <slot />
           </main>
         </div>

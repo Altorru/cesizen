@@ -78,19 +78,19 @@ const getExcerpt = (content: string, length: number = 150) => {
         :href="`/articles/${page.slug}`"
         class="group"
       >
-        <Card class="h-full hover:shadow-xl transition-all hover:scale-[1.02] border-2 hover:border-green-500/50">
+        <Card class="h-full hover:shadow-2xl hover:shadow-green-500/10 transition-all hover:scale-[1.02] border-0 shadow-lg bg-white dark:bg-gray-900">
           <CardHeader>
-            <div class="flex items-start justify-between mb-2">
-              <Badge variant="secondary" class="mb-2">
+            <div class="flex items-start justify-between mb-3">
+              <Badge variant="secondary" class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
                 <UIcon name="i-lucide-book-open" class="mr-1 h-3 w-3" />
                 Article
               </Badge>
             </div>
-            <CardTitle class="text-xl group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors line-clamp-2">
+            <CardTitle class="text-xl group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors line-clamp-2 mb-2">
               {{ page.title }}
             </CardTitle>
-            <CardDescription class="text-sm">
-              <UIcon name="i-lucide-calendar" class="inline h-3 w-3 mr-1" />
+            <CardDescription class="text-sm flex items-center gap-1">
+              <UIcon name="i-lucide-calendar" class="h-3 w-3" />
               {{ formatDate(page.published_at) }}
             </CardDescription>
           </CardHeader>

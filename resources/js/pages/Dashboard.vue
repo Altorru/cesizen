@@ -107,30 +107,5 @@ const quickLinks = [
         </Link>
       </div>
     </div>
-
-    <!-- Wellness Section -->
-    <Card>
-      <CardHeader>
-        <CardTitle>Your Wellness Journey</CardTitle>
-        <CardDescription>Track your mental health progress</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div class="text-center py-8">
-          <UIcon name="i-lucide-heart" class="mx-auto h-16 w-16 text-green-600 dark:text-green-400 mb-4" />
-          <p class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-            Welcome to CESIZen
-          </p>
-          <p class="text-gray-600 dark:text-gray-400 mb-6">
-            Start your journey to better mental health. Explore our articles and tools.
-          </p>
-          <Link href="/articles">
-            <Button size="lg">
-              <UIcon name="i-lucide-book-open" class="mr-2 h-5 w-5" />
-              Browse Articles
-            </Button>
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
   </div>
 </template>

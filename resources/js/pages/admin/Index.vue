@@ -63,10 +63,10 @@ const quickActions = [
 
     <!-- Stats Grid -->
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+          <Card class="border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02]">
             <CardHeader class="pb-3">
               <CardDescription>Total Articles</CardDescription>
-              <CardTitle class="text-4xl">{{ props.stats.total_articles }}</CardTitle>
+              <CardTitle class="text-5xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">{{ props.stats.total_articles }}</CardTitle>
             </CardHeader>
             <CardContent>
               <div class="text-xs text-muted-foreground">
@@ -75,10 +75,10 @@ const quickActions = [
             </CardContent>
           </Card>
 
-          <Card>
+          <Card class="border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20">
             <CardHeader class="pb-3">
               <CardDescription>Published</CardDescription>
-              <CardTitle class="text-4xl text-green-600 dark:text-green-400">
+              <CardTitle class="text-5xl font-bold text-green-600 dark:text-green-400">
                 {{ props.stats.published_articles }}
               </CardTitle>
             </CardHeader>
@@ -89,10 +89,10 @@ const quickActions = [
             </CardContent>
           </Card>
 
-          <Card>
+          <Card class="border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20">
             <CardHeader class="pb-3">
               <CardDescription>Drafts</CardDescription>
-              <CardTitle class="text-4xl text-orange-600 dark:text-orange-400">
+              <CardTitle class="text-5xl font-bold text-orange-600 dark:text-orange-400">
                 {{ props.stats.draft_articles }}
               </CardTitle>
             </CardHeader>
@@ -103,10 +103,10 @@ const quickActions = [
             </CardContent>
           </Card>
 
-          <Card>
+          <Card class="border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
             <CardHeader class="pb-3">
               <CardDescription>Total Users</CardDescription>
-              <CardTitle class="text-4xl text-blue-600 dark:text-blue-400">
+              <CardTitle class="text-5xl font-bold text-blue-600 dark:text-blue-400">
                 {{ props.stats.total_users }}
               </CardTitle>
             </CardHeader>
@@ -130,17 +130,17 @@ const quickActions = [
               :href="action.href"
               class="group"
             >
-              <Card class="hover:shadow-lg transition-shadow cursor-pointer h-full">
+              <Card class="border-0 shadow-lg hover:shadow-2xl hover:shadow-green-500/10 transition-all cursor-pointer h-full hover:scale-[1.02]">
                 <CardHeader>
                   <div class="flex items-start gap-4">
-                    <div class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800">
+                    <div class="p-3 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 group-hover:scale-110 transition-transform">
                       <UIcon :name="action.icon" :class="['h-6 w-6', action.color]" />
                     </div>
                     <div class="flex-1">
-                      <CardTitle class="text-lg group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                      <CardTitle class="text-lg group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors mb-1">
                         {{ action.title }}
                       </CardTitle>
-                      <CardDescription class="mt-1">
+                      <CardDescription class="text-sm">
                         {{ action.description }}
                       </CardDescription>
                     </div>
@@ -150,24 +150,5 @@ const quickActions = [
             </Link>
           </div>
         </div>
-
-        <!-- Recent Activity -->
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Latest changes in your admin panel</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div class="text-sm text-gray-600 dark:text-gray-400">
-              <p class="mb-2">
-                <UIcon name="i-lucide-info" class="inline h-4 w-4 mr-2" />
-                Activity tracking coming soon...
-              </p>
-              <p>
-                This section will show recent articles created, users registered, and other important events.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 </template>

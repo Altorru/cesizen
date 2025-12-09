@@ -56,20 +56,20 @@ const formattedContent = computed(() => {
   <article class="container mx-auto px-6 py-12">
     <div class="max-w-4xl mx-auto">
       <!-- Back Button -->
-      <Link href="/articles" class="inline-block mb-8">
-        <Button variant="ghost" size="sm">
-          <UIcon name="i-lucide-arrow-left" class="mr-2 h-4 w-4" />
+      <Link href="/articles" class="inline-block mb-8 group">
+        <Button variant="ghost" size="sm" class="hover:text-green-600 dark:hover:text-green-400">
+          <UIcon name="i-lucide-arrow-left" class="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
           Back to Articles
         </Button>
       </Link>
 
       <!-- Article Header -->
-      <header class="mb-8">
-        <Badge variant="secondary" class="mb-4">
+      <header class="mb-10">
+        <Badge variant="secondary" class="mb-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
           <UIcon name="i-lucide-book-open" class="mr-1 h-3 w-3" />
           Article
         </Badge>
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
           {{ props.page.title }}
         </h1>
         <div class="flex flex-wrap items-center gap-4 text-gray-600 dark:text-gray-400">
@@ -85,8 +85,8 @@ const formattedContent = computed(() => {
       </header>
 
       <!-- Article Content -->
-      <Card>
-        <CardContent class="pt-8">
+      <Card class="border-0 shadow-xl">
+        <CardContent class="pt-8 pb-12 px-8 md:px-12">
           <div
             class="prose prose-lg prose-green dark:prose-invert max-w-none"
             v-html="formattedContent"
@@ -97,7 +97,7 @@ const formattedContent = computed(() => {
       <!-- Footer Actions -->
       <div class="mt-12 flex justify-center">
         <Link href="/articles">
-          <Button size="lg" variant="outline">
+          <Button size="lg" variant="outline" class="shadow-lg hover:shadow-xl hover:text-green-600 dark:hover:text-green-400 transition-all">
             <UIcon name="i-lucide-grid" class="mr-2 h-5 w-5" />
             View All Articles
           </Button>

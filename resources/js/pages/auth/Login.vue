@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import AuthenticatedSessionController from '@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController'
+import AuthCard from '@/components/AuthCard.vue'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import AuthBase from '@/layouts/Empty.vue'
+import Layout from '@/layouts/Empty.vue'
 import { register } from '@/routes'
 import { request } from '@/routes/password'
-import { Form, Head } from '@inertiajs/vue3'
+import { Form, Head, Link } from '@inertiajs/vue3'
+
+defineOptions({ layout: Layout })
 
 defineProps<{
   status?: string
@@ -16,10 +18,10 @@ defineProps<{
 </script>
 
 <template>
-  <AuthBase title="Log in to your account" description="Enter your email and password below to log in">
+  <AuthCard title="Welcome back" description="Enter your credentials to access your account">
     <Head title="Log in" />
 
-    <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
+    <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600 dark:text-green-400">
       {{ status }}
     </div>
 
@@ -47,7 +49,7 @@ defineProps<{
         <div class="space-y-2">
           <div class="flex items-center justify-between">
             <Label for="password">Password</Label>
-            <Link v-if="canResetPassword" :href="request()" class="text-sm text-primary hover:underline" :tabindex="5">
+            <Link v-if="canResetPassword" :href="request()" class="text-sm text-primary hover:underline">
               Forgot password?
             </Link>
           </div>
@@ -56,7 +58,7 @@ defineProps<{
             name="password"
             type="password" 
             autocomplete="current-password" 
-            placeholder="Password" 
+            placeholder="••••••••" 
             required 
           />
           <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
@@ -67,7 +69,7 @@ defineProps<{
             id="remember" 
             name="remember" 
             type="checkbox" 
-            class="rounded border-gray-300 text-primary focus:ring-primary"
+            class="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-600 focus:ring-offset-0"
           />
           <Label for="remember" class="text-sm font-normal cursor-pointer">Remember me</Label>
         </div>
@@ -84,5 +86,5 @@ defineProps<{
         </Link>
       </div>
     </Form>
-  </AuthBase>
+  </AuthCard>
 </template>

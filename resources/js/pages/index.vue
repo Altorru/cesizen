@@ -106,24 +106,24 @@ const features = [
   </section>
 
   <!-- Stats Section -->
-  <section class="bg-white dark:bg-gray-800 py-12">
+  <section class="bg-gradient-to-r from-green-50/50 to-blue-50/50 dark:from-gray-900/50 dark:to-gray-800/50 py-16 border-y border-gray-200/50 dark:border-gray-800/50">
     <div class="container mx-auto px-6">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        <div>
-          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">100%</div>
-          <div class="text-gray-600 dark:text-gray-400">Free to Use</div>
+        <div class="group">
+          <div class="text-5xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">100%</div>
+          <div class="text-gray-600 dark:text-gray-400 font-medium">Free to Use</div>
         </div>
-        <div>
-          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">24/7</div>
-          <div class="text-gray-600 dark:text-gray-400">Available</div>
+        <div class="group">
+          <div class="text-5xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">24/7</div>
+          <div class="text-gray-600 dark:text-gray-400 font-medium">Available</div>
         </div>
-        <div>
-          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">🔒</div>
-          <div class="text-gray-600 dark:text-gray-400">Secure & Private</div>
+        <div class="group">
+          <div class="text-5xl mb-2 group-hover:scale-110 transition-transform">🔒</div>
+          <div class="text-gray-600 dark:text-gray-400 font-medium">Secure & Private</div>
         </div>
-        <div>
-          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">✨</div>
-          <div class="text-gray-600 dark:text-gray-400">Science-Based</div>
+        <div class="group">
+          <div class="text-5xl mb-2 group-hover:scale-110 transition-transform">✨</div>
+          <div class="text-gray-600 dark:text-gray-400 font-medium">Science-Based</div>
         </div>
       </div>
     </div>
@@ -141,10 +141,10 @@ const features = [
     </div>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <Card v-for="(feature, index) in features" :key="index" class="hover:shadow-lg transition-shadow">
+      <Card v-for="(feature, index) in features" :key="index" class="group hover:shadow-2xl hover:shadow-green-500/10 transition-all hover:scale-[1.02] border-0 bg-white dark:bg-gray-900">
         <CardHeader>
-          <div class="text-4xl mb-3">{{ feature.emoji }}</div>
-          <CardTitle class="text-xl">{{ feature.title }}</CardTitle>
+          <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">{{ feature.emoji }}</div>
+          <CardTitle class="text-xl mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">{{ feature.title }}</CardTitle>
           <CardDescription class="text-base">
             {{ feature.description }}
           </CardDescription>
@@ -155,34 +155,39 @@ const features = [
 
   <!-- CTA Section -->
   <section class="container mx-auto px-6 py-20">
-    <Card class="bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-700 dark:to-blue-700 border-0">
+    <Card class="bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-700 dark:to-blue-700 border-0 shadow-2xl shadow-green-500/20">
       <CardContent class="py-16 px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-          Ready to Start Your Wellness Journey?
-        </h2>
-        <p class="text-xl text-green-50 mb-8 max-w-2xl mx-auto">
-          Join CESIZen today and take the first step towards better mental health and stress management.
-        </p>
-        <div v-if="!user" class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/register">
-            <Button size="lg" variant="secondary" class="min-w-[200px]">
-              <UIcon name="i-lucide-sparkles" class="mr-2 h-5 w-5" />
-              Create Free Account
-            </Button>
-          </Link>
-          <Link href="/login">
-            <Button size="lg" variant="outline" class="min-w-[200px] bg-white/10 hover:bg-white/20 text-white border-white/30">
-              Sign In
-            </Button>
-          </Link>
-        </div>
-        <div v-else>
-          <Link href="/dashboard">
-            <Button size="lg" variant="secondary" class="min-w-[200px]">
-              <UIcon name="i-lucide-arrow-right" class="mr-2 h-5 w-5" />
-              Continue to Dashboard
-            </Button>
-          </Link>
+        <div class="max-w-3xl mx-auto">
+          <div class="inline-block mb-6">
+            <div class="text-6xl">🌿</div>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Start Your Wellness Journey?
+          </h2>
+          <p class="text-xl text-green-50 mb-8">
+            Join CESIZen today and take the first step towards better mental health and stress management.
+          </p>
+          <div v-if="!user" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/register">
+              <Button size="lg" variant="secondary" class="min-w-[200px] shadow-lg hover:shadow-xl transition-all">
+                <UIcon name="i-lucide-sparkles" class="mr-2 h-5 w-5" />
+                Create Free Account
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button size="lg" variant="outline" class="min-w-[200px] bg-white/10 hover:bg-white/20 text-white border-white/30 shadow-lg hover:shadow-xl transition-all">
+                Sign In
+              </Button>
+            </Link>
+          </div>
+          <div v-else>
+            <Link href="/dashboard">
+              <Button size="lg" variant="secondary" class="min-w-[200px] shadow-lg hover:shadow-xl transition-all">
+                <UIcon name="i-lucide-arrow-right" class="mr-2 h-5 w-5" />
+                Continue to Dashboard
+              </Button>
+            </Link>
+          </div>
         </div>
       </CardContent>
     </Card>

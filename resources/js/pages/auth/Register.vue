@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { store } from '@/actions/App/Http/Controllers/Auth/RegisteredUserController'
+import AuthCard from '@/components/AuthCard.vue'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import Layout from '@/layouts/Empty.vue'
 import { login } from '@/routes'
-import { Head, router } from '@inertiajs/vue3'
+import { Head, Link, router } from '@inertiajs/vue3'
 
 defineOptions({ layout: Layout })
 
@@ -32,35 +33,26 @@ function onSubmit(e: Event) {
 </script>
 
 <template>
-  <div>
+  <AuthCard title="Create an account" description="Start your wellness journey today">
     <Head title="Register" />
 
-    <div class="mx-auto max-w-md space-y-6">
-      <div class="space-y-2 text-center">
-        <h1 class="text-3xl font-bold">Create an account</h1>
-        <p class="text-muted-foreground">
-          Already have an account? 
-          <Link :href="login()" class="font-medium text-primary hover:underline">
-            Login
-          </Link>
-        </p>
-      </div>
-
-      <form @submit="onSubmit" class="space-y-4">
+    <form @submit="onSubmit" class="space-y-6">
+      <div class="space-y-4">
         <div class="space-y-2">
-          <Label for="name">Name</Label>
+          <Label for="name">Full name</Label>
           <Input 
             id="name"
             v-model="form.name"
             type="text" 
-            placeholder="Full name"
+            placeholder="John Doe"
+            autofocus
             required 
           />
           <p v-if="errors.name" class="text-sm text-destructive">{{ errors.name }}</p>
         </div>
 
         <div class="space-y-2">
-          <Label for="email">Email</Label>
+          <Label for="email">Email address</Label>
           <Input 
             id="email"
             v-model="form.email"
@@ -77,23 +69,24 @@ function onSubmit(e: Event) {
             id="password"
             v-model="form.password"
             type="password" 
-            placeholder="Password"
+            placeholder="••••••••"
             required 
           />
           <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
+          <p class="text-xs text-muted-foreground">Must be at least 8 characters</p>
         </div>
 
         <Button :disabled="form.processing" type="submit" class="w-full">
           Create account
         </Button>
-      </form>
+      </div>
 
       <div class="text-center text-sm text-muted-foreground">
-        By signing up, you agree to our 
-        <Link href="/" class="font-medium text-primary hover:underline">
-          Terms of Service
+        Already have an account?
+        <Link :href="login()" class="text-primary hover:underline font-medium">
+          Log in
         </Link>
       </div>
-    </div>
-  </div>
+    </form>
+  </AuthCard>
 </template>
