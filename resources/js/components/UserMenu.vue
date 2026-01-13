@@ -14,9 +14,6 @@
 
   const user = computed(() => ({
     name: auth.value.user.name,
-    avatar: {
-      text: getInitials(auth.value.user.name),
-    },
   }))
 
   const items = computed<DropdownMenuItem[][]>(() => [
@@ -24,7 +21,6 @@
       {
         type: 'label',
         label: user.value.name,
-        avatar: user.value.avatar,
       },
     ],
     [
