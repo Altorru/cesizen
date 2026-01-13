@@ -52,7 +52,6 @@ const sidebarItems = computed(() => {
           label: 'Gestion des Utilisateurs',
           icon: 'i-lucide-users',
           to: '/admin/users',
-          badge: 'Bientôt',
         },
       ],
       [

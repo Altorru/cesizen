@@ -10,7 +10,7 @@ Route::get('/', fn () => Inertia::render('index'))->name('home');
 Route::get('/articles', [ContentPageController::class, 'index'])->name('content.index');
 Route::get('/articles/{slug}', [ContentPageController::class, 'show'])->name('content.show');
 
-Route::middleware(['auth'])->group(function (): void {
+Route::middleware(['auth', 'active'])->group(function (): void {
     Route::get('dashboard', fn () => Inertia::render('Dashboard'))
         ->middleware('redirect.admin')
         ->name('dashboard');
