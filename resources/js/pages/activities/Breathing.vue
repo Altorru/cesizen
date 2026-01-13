@@ -266,25 +266,25 @@ onUnmounted(() => {
           <!-- Contrôles -->
           <div class="flex flex-col items-center gap-4">
             <!-- Sélecteur de cycles (visible uniquement avant l'exercice) -->
-            <div v-if="!isActive" class="flex items-center gap-3 bg-white dark:bg-gray-800 rounded-lg px-6 py-3 shadow-md border border-gray-200 dark:border-gray-700">
+            <div v-if="!isActive" class="flex items-center gap-3 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl px-6 py-4 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:scale-105">
               <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Nombre de cycles :</span>
               <div class="flex items-center gap-2">
                 <Button
                   @click="totalCycles = Math.max(1, totalCycles - 1)"
                   size="sm"
                   variant="outline"
-                  class="h-8 w-8 p-0"
+                  class="h-9 w-9 p-0 hover:bg-red-50 dark:hover:bg-red-950/30 hover:border-red-300 dark:hover:border-red-700 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 hover:scale-110 active:scale-95"
                 >
                   <UIcon name="i-lucide-minus" class="h-4 w-4" />
                 </Button>
-                <div class="w-12 text-center">
-                  <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalCycles }}</span>
+                <div class="w-16 text-center bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950/30 dark:to-blue-950/30 rounded-lg py-2 px-3 border border-green-200 dark:border-green-800">
+                  <span class="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">{{ totalCycles }}</span>
                 </div>
                 <Button
                   @click="totalCycles = Math.min(20, totalCycles + 1)"
                   size="sm"
                   variant="outline"
-                  class="h-8 w-8 p-0"
+                  class="h-9 w-9 p-0 hover:bg-green-50 dark:hover:bg-green-950/30 hover:border-green-300 dark:hover:border-green-700 hover:text-green-600 dark:hover:text-green-400 transition-all duration-200 hover:scale-110 active:scale-95"
                 >
                   <UIcon name="i-lucide-plus" class="h-4 w-4" />
                 </Button>
@@ -297,7 +297,7 @@ onUnmounted(() => {
                 v-if="!isActive"
                 @click="startExercise"
                 size="lg"
-                class="px-8 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg hover:shadow-xl transition-all"
+                class="px-8 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95"
               >
                 <UIcon name="i-lucide-play" class="mr-2 h-5 w-5" />
                 Commencer
@@ -306,11 +306,11 @@ onUnmounted(() => {
                 v-else
                 @click="stopExercise"
                 size="lg"
-                variant="destructive"
-                class="px-8 shadow-lg hover:shadow-xl transition-all"
+                class="px-8 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg hover:shadow-2xl hover:shadow-red-500/50 transition-all duration-300 hover:scale-105 active:scale-95 group relative overflow-hidden"
               >
-                <UIcon name="i-lucide-square" class="mr-2 h-5 w-5" />
-                Arrêter
+                <span class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <UIcon name="i-lucide-square" class="mr-2 h-5 w-5 relative z-10 group-hover:animate-pulse" />
+                <span class="relative z-10">Arrêter</span>
               </Button>
             </div>
           </div>
