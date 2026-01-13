@@ -14,7 +14,7 @@ use function now;
 class ContentPageFactory extends Factory
 {
     /**
-     * Define the model's default state.
+     * Définir l'état par défaut du modèle.
      *
      * @return array<string, mixed>
      */
@@ -31,7 +31,7 @@ class ContentPageFactory extends Factory
     }
 
     /**
-     * Indicate that the page is published.
+     * Indiquer que la page est publiée.
      */
     public function published(): static
     {

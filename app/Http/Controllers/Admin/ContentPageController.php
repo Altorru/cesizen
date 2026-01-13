@@ -15,7 +15,7 @@ use function redirect;
 class ContentPageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher la liste des ressources.
      */
     public function index(): Response
     {
@@ -29,7 +29,7 @@ class ContentPageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Afficher le formulaire de création d'une nouvelle ressource.
      */
     public function create(): Response
     {
@@ -37,7 +37,7 @@ class ContentPageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Enregistrer une nouvelle ressource en base de données.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -60,11 +60,11 @@ class ContentPageController extends Controller
         ]);
 
         return redirect()->route('admin.content-pages.index')
-            ->with('success', 'Content page created successfully.');
+            ->with('success', 'Page de contenu créée avec succès.');
     }
 
     /**
-     * Display the specified resource.
+     * Afficher la ressource spécifiée.
      */
     public function show(ContentPage $contentPage): Response
     {
@@ -74,7 +74,7 @@ class ContentPageController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Afficher le formulaire d'édition de la ressource spécifiée.
      */
     public function edit(ContentPage $contentPage): Response
     {
@@ -84,7 +84,7 @@ class ContentPageController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Mettre à jour la ressource spécifiée en base de données.
      */
     public function update(Request $request, ContentPage $contentPage): RedirectResponse
     {
@@ -106,17 +106,17 @@ class ContentPageController extends Controller
         ]);
 
         return redirect()->route('admin.content-pages.index')
-            ->with('success', 'Content page updated successfully.');
+            ->with('success', 'Page de contenu mise à jour avec succès.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprimer la ressource spécifiée de la base de données.
      */
     public function destroy(ContentPage $contentPage): RedirectResponse
     {
         $contentPage->delete();
 
         return redirect()->route('admin.content-pages.index')
-            ->with('success', 'Content page deleted successfully.');
+            ->with('success', 'Page de contenu supprimée avec succès.');
     }
 }

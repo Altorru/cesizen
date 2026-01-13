@@ -40,7 +40,7 @@ const formatDate = (date: string) => {
 }
 
 const deletePage = (id: string) => {
-  if (confirm('Are you sure you want to delete this page?')) {
+  if (confirm('Êtes-vous sûr de vouloir supprimer cette page ?')) {
     router.delete(`/admin/content-pages/${id}`)
   }
 }
@@ -52,16 +52,16 @@ const deletePage = (id: string) => {
     <div class="flex items-center justify-between">
       <div>
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Content Management
+          Gestion du contenu
         </h1>
         <p class="text-gray-600 dark:text-gray-400">
-          Manage your articles and content pages
+          Gérez vos articles et pages de contenu
         </p>
       </div>
       <Link href="/admin/content-pages/create">
         <Button>
           <UIcon name="i-lucide-plus" class="mr-2 h-4 w-4" />
-          New Article
+          Nouvel article
         </Button>
       </Link>
     </div>
@@ -69,19 +69,19 @@ const deletePage = (id: string) => {
     <!-- Pages List -->
     <Card>
       <CardHeader>
-        <CardTitle>All Pages</CardTitle>
+        <CardTitle>Toutes les pages</CardTitle>
         <CardDescription>
-          {{ props.pages.total }} total pages
+          {{ props.pages.total }} pages au total
         </CardDescription>
       </CardHeader>
       <CardContent>
             <div v-if="props.pages.data.length === 0" class="text-center py-12">
               <UIcon name="i-lucide-file-text" class="mx-auto h-12 w-12 text-gray-400 mb-4" />
               <p class="text-gray-500 dark:text-gray-400 mb-4">
-                No content pages yet
+                Aucune page de contenu pour le moment
               </p>
               <Link href="/admin/content-pages/create">
-                <Button>Create your first page</Button>
+                <Button>Créer votre première page</Button>
               </Link>
             </div>
 
@@ -97,14 +97,14 @@ const deletePage = (id: string) => {
                       {{ page.title }}
                     </h3>
                     <Badge :variant="page.is_published ? 'default' : 'secondary'">
-                      {{ page.is_published ? 'Published' : 'Draft' }}
+                      {{ page.is_published ? 'Publié' : 'Brouillon' }}
                     </Badge>
                   </div>
                   <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
                     <span class="font-medium">Slug:</span> /{{ page.slug }}
                   </p>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
-                    Created by {{ page.creator.name }} on {{ formatDate(page.created_at) }}
+                    Créé par {{ page.creator.name }} le {{ formatDate(page.created_at) }}
                   </p>
                 </div>
 
@@ -127,14 +127,14 @@ const deletePage = (id: string) => {
               class="mt-6 flex items-center justify-between"
             >
               <p class="text-sm text-gray-600 dark:text-gray-400">
-                Showing {{ (props.pages.current_page - 1) * props.pages.per_page + 1 }} to
+                Affichage de {{ (props.pages.current_page - 1) * props.pages.per_page + 1 }} à
                 {{
                   Math.min(
                     props.pages.current_page * props.pages.per_page,
                     props.pages.total
                   )
                 }}
-                of {{ props.pages.total }} results
+                sur {{ props.pages.total }} résultats
               </p>
               <div class="flex gap-2">
                 <Link
@@ -146,7 +146,7 @@ const deletePage = (id: string) => {
                     size="sm"
                     :disabled="props.pages.current_page === 1"
                   >
-                    Previous
+                    Précédent
                   </Button>
                 </Link>
                 <Link
@@ -158,7 +158,7 @@ const deletePage = (id: string) => {
                     size="sm"
                     :disabled="props.pages.current_page === props.pages.last_page"
                   >
-                    Next
+                    Suivant
                   </Button>
                 </Link>
               </div>

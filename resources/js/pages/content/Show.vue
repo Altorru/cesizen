@@ -59,7 +59,7 @@ const formattedContent = computed(() => {
       <Link href="/articles" class="inline-block mb-8 group">
         <Button variant="ghost" size="sm" class="hover:text-green-600 dark:hover:text-green-400">
           <UIcon name="i-lucide-arrow-left" class="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-          Back to Articles
+          Retour aux articles
         </Button>
       </Link>
 
@@ -99,7 +99,7 @@ const formattedContent = computed(() => {
         <Link href="/articles">
           <Button size="lg" variant="outline" class="shadow-lg hover:shadow-xl hover:text-green-600 dark:hover:text-green-400 transition-all">
             <UIcon name="i-lucide-grid" class="mr-2 h-5 w-5" />
-            View All Articles
+            Voir tous les articles
           </Button>
         </Link>
       </div>

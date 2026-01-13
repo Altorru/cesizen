@@ -9,7 +9,7 @@ use Inertia\Response;
 class ContentPageController extends Controller
 {
     /**
-     * Display a listing of published content pages.
+     * Afficher la liste des pages de contenu publiées.
      */
     public function index(): Response
     {
@@ -24,7 +24,7 @@ class ContentPageController extends Controller
     }
 
     /**
-     * Display the specified content page.
+     * Afficher la page de contenu spécifiée.
      */
     public function show(string $slug): Response
     {

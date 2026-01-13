@@ -52,10 +52,10 @@ const getExcerpt = (content: string, length: number = 150) => {
     <!-- Header -->
     <div class="mb-12 text-center">
       <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-        Mental Health Articles
+        Articles sur la santé mentale
       </h1>
       <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-        Explore our collection of articles about stress management, mental wellness, and self-care.
+        Découvrez notre collection d'articles sur la gestion du stress, le bien-être mental et l'autosoin.
       </p>
     </div>
 
@@ -63,10 +63,10 @@ const getExcerpt = (content: string, length: number = 150) => {
     <div v-if="props.pages.data.length === 0" class="text-center py-20">
       <div class="text-6xl mb-6">📚</div>
       <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
-        No articles yet
+        Aucun article pour le moment
       </h3>
       <p class="text-lg text-gray-600 dark:text-gray-400">
-        We're working on creating valuable content for you. Check back soon!
+        Nous travaillons à la création de contenu de qualité pour vous. Revenez bientôt !
       </p>
     </div>
 
@@ -99,7 +99,7 @@ const getExcerpt = (content: string, length: number = 150) => {
               {{ getExcerpt(page.content) }}
             </p>
             <div class="flex items-center text-sm text-green-600 dark:text-green-400 font-medium group-hover:underline">
-              Read article
+              Lire l'article
               <UIcon name="i-lucide-arrow-right" class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </CardContent>
@@ -118,12 +118,12 @@ const getExcerpt = (content: string, length: number = 150) => {
       >
         <Button variant="outline">
           <UIcon name="i-lucide-chevron-left" class="mr-2 h-4 w-4" />
-          Previous
+          Précédent
         </Button>
       </Link>
       
       <span class="px-4 py-2 text-gray-700 dark:text-gray-300 font-medium">
-        Page {{ props.pages.current_page }} of {{ props.pages.last_page }}
+        Page {{ props.pages.current_page }} sur {{ props.pages.last_page }}
       </span>
 
       <Link
@@ -131,7 +131,7 @@ const getExcerpt = (content: string, length: number = 150) => {
         :href="`/articles?page=${props.pages.current_page + 1}`"
       >
         <Button variant="outline">
-          Next
+          Suivant
           <UIcon name="i-lucide-chevron-right" class="ml-2 h-4 w-4" />
         </Button>
       </Link>

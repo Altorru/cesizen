@@ -43,31 +43,31 @@ const submit = () => {
     <!-- Header -->
     <div class="mb-6">
       <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-        Create New Page
+        Créer une nouvelle page
       </h1>
       <p class="text-gray-600 dark:text-gray-400">
-        Add a new informational page to your application.
+        Ajouter une nouvelle page d'information à votre application.
       </p>
     </div>
 
     <!-- Form -->
     <Card>
       <CardHeader>
-        <CardTitle>Page Details</CardTitle>
+        <CardTitle>Détails de la page</CardTitle>
         <CardDescription>
-          Fill in the information for your content page.
+          Remplissez les informations de votre page de contenu.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form @submit.prevent="submit" class="space-y-6">
                 <!-- Title -->
                 <div class="space-y-2">
-                  <Label for="title">Title *</Label>
+                  <Label for="title">Titre *</Label>
                   <Input
                     id="title"
                     v-model="form.title"
                     type="text"
-                    placeholder="About CESIZen"
+                    placeholder="À propos de CESIZen"
                     required
                     @blur="generateSlug"
                   />
@@ -84,7 +84,7 @@ const submit = () => {
                       id="slug"
                       v-model="form.slug"
                       type="text"
-                      placeholder="about-cesizen"
+                      placeholder="a-propos-de-cesizen"
                       required
                     />
                     <Button
@@ -92,7 +92,7 @@ const submit = () => {
                       variant="outline"
                       @click="generateSlug"
                     >
-                      Generate
+                      Générer
                     </Button>
                   </div>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
@@ -105,16 +105,16 @@ const submit = () => {
 
                 <!-- Content -->
                 <div class="space-y-2">
-                  <Label for="content">Content *</Label>
+                  <Label for="content">Contenu *</Label>
                   <Textarea
                     id="content"
                     v-model="form.content"
                     rows="12"
-                    placeholder="Enter your content here. You can use Markdown formatting."
+                    placeholder="Entrez votre contenu ici. Vous pouvez utiliser le formatage Markdown."
                     required
                   />
                   <p class="text-xs text-gray-500 dark:text-gray-400">
-                    Supports Markdown formatting
+                    Supporte le formatage Markdown
                   </p>
                   <p v-if="form.errors.content" class="text-sm text-red-500">
                     {{ form.errors.content }}
@@ -133,11 +133,11 @@ const submit = () => {
                       for="is_published"
                       class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                     >
-                      Publish immediately
+                      Publier immédiatement
                     </Label>
                   </div>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
-                    Status: <span :class="form.is_published ? 'text-green-600 font-medium' : 'text-gray-600'">{{ form.is_published ? '✓ Will be published' : '○ Will be saved as draft' }}</span>
+                    Statut : <span :class="form.is_published ? 'text-green-600 font-medium' : 'text-gray-600'">{{ form.is_published ? '✓ Sera publié' : '○ Sera enregistré comme brouillon' }}</span>
                   </p>
                 </div>
 
@@ -149,7 +149,7 @@ const submit = () => {
                       variant="outline"
                       :disabled="form.processing"
                     >
-                      Cancel
+                      Annuler
                     </Button>
                   </Link>
                   <Button type="submit" :disabled="form.processing">
@@ -159,7 +159,7 @@ const submit = () => {
                       class="mr-2 h-4 w-4 animate-spin"
                     />
                     <UIcon v-else name="i-lucide-save" class="mr-2 h-4 w-4" />
-                    Create Page
+                    Créer la page
                   </Button>
         </div>
       </form>

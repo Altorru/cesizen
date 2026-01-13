@@ -12,11 +12,11 @@ use function now;
 class AdminUserSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Exécuter les seeds de la base de données.
      */
     public function run(): void
     {
-        // Create an admin user
+        // Créer un utilisateur administrateur
         $admin = User::firstOrCreate(
             ['email' => 'admin@cesizen.com'],
             [
@@ -27,26 +27,26 @@ class AdminUserSeeder extends Seeder
             ]
         );
 
-        // Create sample content pages
+        // Créer des pages de contenu d'exemple
         $pages = [
             [
-                'title' => 'About CESIZen',
-                'slug' => 'about',
-                'content' => "# About CESIZen\n\nCESIZen is your companion for stress management and mental health.\n\n## Our Mission\n\nWe aim to provide accessible tools and resources to help you manage stress and improve your mental well-being.\n\n## Features\n\n- Emotion tracking\n- Breathing exercises\n- Mental health resources\n- Personalized insights",
+                'title' => 'À propos de CESIZen',
+                'slug' => 'a-propos',
+                'content' => "# À propos de CESIZen\n\nCESIZen est votre compagnon pour la gestion du stress et de la santé mentale.\n\n## Notre Mission\n\nNous visons à fournir des outils et des ressources accessibles pour vous aider à gérer le stress et améliorer votre bien-être mental.\n\n## Fonctionnalités\n\n- Suivi des émotions\n- Exercices de respiration\n- Ressources sur la santé mentale\n- Informations personnalisées",
                 'is_published' => true,
                 'published_at' => now(),
             ],
             [
-                'title' => 'Mental Health Guide',
-                'slug' => 'mental-health',
-                'content' => "# Understanding Mental Health\n\nMental health is just as important as physical health.\n\n## What is Mental Health?\n\nMental health includes our emotional, psychological, and social well-being. It affects how we think, feel, and act.\n\n## Why It Matters\n\n- Helps determine how we handle stress\n- Relates to others\n- Makes healthy choices\n\n## Getting Help\n\nIf you're struggling with your mental health, remember that help is available. Don't hesitate to reach out to a mental health professional.",
+                'title' => 'Guide de la santé mentale',
+                'slug' => 'sante-mentale',
+                'content' => "# Comprendre la santé mentale\n\nLa santé mentale est tout aussi importante que la santé physique.\n\n## Qu'est-ce que la santé mentale ?\n\nLa santé mentale comprend notre bien-être émotionnel, psychologique et social. Elle affecte notre façon de penser, de ressentir et d'agir.\n\n## Pourquoi c'est important\n\n- Aide à déterminer comment nous gérons le stress\n- Influence nos relations avec les autres\n- Contribue à faire des choix sains\n\n## Obtenir de l'aide\n\nSi vous êtes aux prises avec votre santé mentale, n'oubliez pas que de l'aide est disponible. N'hésitez pas à contacter un professionnel de la santé mentale.",
                 'is_published' => true,
                 'published_at' => now(),
             ],
             [
-                'title' => 'Privacy Policy',
-                'slug' => 'privacy',
-                'content' => "# Privacy Policy\n\nLast updated: ".now()->format('F d, Y')."\n\n## Data We Collect\n\nWe collect only the data necessary to provide our services:\n\n- Account information (name, email)\n- Emotion tracking data\n- Usage statistics\n\n## How We Use Your Data\n\nYour data is used solely to provide and improve our services. We never sell your personal information.\n\n## Data Security\n\nWe implement industry-standard security measures to protect your data.",
+                'title' => 'Politique de confidentialité',
+                'slug' => 'confidentialite',
+                'content' => "# Politique de confidentialité\n\nDernière mise à jour : ".now()->format('d F Y')."\n\n## Données que nous collectons\n\nNous collectons uniquement les données nécessaires pour fournir nos services :\n\n- Informations de compte (nom, email)\n- Données de suivi des émotions\n- Statistiques d'utilisation\n\n## Comment nous utilisons vos données\n\nVos données sont utilisées uniquement pour fournir et améliorer nos services. Nous ne vendons jamais vos informations personnelles.\n\n## Sécurité des données\n\nNous mettons en œuvre des mesures de sécurité conformes aux normes de l'industrie pour protéger vos données.",
                 'is_published' => true,
                 'published_at' => now(),
             ],
@@ -62,8 +62,8 @@ class AdminUserSeeder extends Seeder
             );
         }
 
-        $this->command->info('Admin user and sample content pages created successfully!');
+        $this->command->info('Utilisateur administrateur et pages de contenu d\'exemple créés avec succès !');
         $this->command->info('Email: admin@cesizen.com');
-        $this->command->info('Password: password');
+        $this->command->info('Mot de passe: password');
     }
 }
