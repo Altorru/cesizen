@@ -284,15 +284,6 @@ onUnmounted(() => {
               <UIcon name="i-lucide-square" class="mr-2 h-5 w-5" />
               Arrêter
             </Button>
-            
-            <Button
-              v-if="!isActive && selectedPattern"
-              @click="selectedPattern = null"
-              size="lg"
-              variant="outline"
-            >
-              Changer d'exercice
-            </Button>
           </div>
 
           <!-- Instructions -->
