@@ -264,26 +264,55 @@ onUnmounted(() => {
           </div>
 
           <!-- Contrôles -->
-          <div class="flex gap-4">
-            <Button
-              v-if="!isActive"
-              @click="startExercise"
-              size="lg"
-              class="px-8 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg hover:shadow-xl transition-all"
-            >
-              <UIcon name="i-lucide-play" class="mr-2 h-5 w-5" />
-              Commencer
-            </Button>
-            <Button
-              v-else
-              @click="stopExercise"
-              size="lg"
-              variant="destructive"
-              class="px-8 shadow-lg hover:shadow-xl transition-all"
-            >
-              <UIcon name="i-lucide-square" class="mr-2 h-5 w-5" />
-              Arrêter
-            </Button>
+          <div class="flex flex-col items-center gap-4">
+            <!-- Sélecteur de cycles (visible uniquement avant l'exercice) -->
+            <div v-if="!isActive" class="flex items-center gap-3 bg-white dark:bg-gray-800 rounded-lg px-6 py-3 shadow-md border border-gray-200 dark:border-gray-700">
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Nombre de cycles :</span>
+              <div class="flex items-center gap-2">
+                <Button
+                  @click="totalCycles = Math.max(1, totalCycles - 1)"
+                  size="sm"
+                  variant="outline"
+                  class="h-8 w-8 p-0"
+                >
+                  <UIcon name="i-lucide-minus" class="h-4 w-4" />
+                </Button>
+                <div class="w-12 text-center">
+                  <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalCycles }}</span>
+                </div>
+                <Button
+                  @click="totalCycles = Math.min(20, totalCycles + 1)"
+                  size="sm"
+                  variant="outline"
+                  class="h-8 w-8 p-0"
+                >
+                  <UIcon name="i-lucide-plus" class="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="flex gap-4">
+              <Button
+                v-if="!isActive"
+                @click="startExercise"
+                size="lg"
+                class="px-8 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg hover:shadow-xl transition-all"
+              >
+                <UIcon name="i-lucide-play" class="mr-2 h-5 w-5" />
+                Commencer
+              </Button>
+              <Button
+                v-else
+                @click="stopExercise"
+                size="lg"
+                variant="destructive"
+                class="px-8 shadow-lg hover:shadow-xl transition-all"
+              >
+                <UIcon name="i-lucide-square" class="mr-2 h-5 w-5" />
+                Arrêter
+              </Button>
+            </div>
           </div>
 
           <!-- Instructions -->
