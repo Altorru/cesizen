@@ -23,7 +23,6 @@ const quickLinks = [
     icon: 'i-lucide-wind',
     href: '/activities/breathing',
     color: 'text-blue-600 dark:text-blue-400',
-    badge: 'Bientôt',
   },
   {
     title: 'Suivi des Émotions',
