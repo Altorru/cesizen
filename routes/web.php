@@ -14,6 +14,10 @@ Route::middleware(['auth'])->group(function (): void {
     Route::get('dashboard', fn () => Inertia::render('Dashboard'))
         ->middleware('redirect.admin')
         ->name('dashboard');
+    
+    // Activities
+    Route::get('activities/breathing', fn () => Inertia::render('activities/Breathing'))
+        ->name('activities.breathing');
 });
 
 require __DIR__.'/admin.php';

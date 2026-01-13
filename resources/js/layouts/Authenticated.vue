@@ -83,7 +83,6 @@ const sidebarItems = computed(() => {
           label: 'Exercice de Respiration',
           icon: 'i-lucide-wind',
           to: '/activities/breathing',
-          badge: 'Bientôt',
         },
         {
           label: 'Suivi des Émotions',
