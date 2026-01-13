@@ -41,22 +41,25 @@ class ContentPageController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        \Log::info('ContentPage Store - Raw Input:', $request->all());
+        
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|unique:content_pages,slug',
             'content' => 'required|string',
-            'is_published' => 'sometimes|boolean',
+            'is_published' => 'boolean',
         ]);
-
-        $isPublished = $validated['is_published'] ?? false;
+        
+        \Log::info('ContentPage Store - Validated:', $validated);
+        \Log::info('ContentPage Store - is_published type:', ['type' => gettype($validated['is_published'] ?? null), 'value' => $validated['is_published'] ?? 'null']);
 
         $page = ContentPage::create([
             'title' => $validated['title'],
             'slug' => $validated['slug'],
             'content' => $validated['content'],
-            'is_published' => $isPublished,
+            'is_published' => $validated['is_published'] ?? false,
             'created_by' => $request->user()->id,
-            'published_at' => $isPublished ? now() : null,
+            'published_at' => ($validated['is_published'] ?? false) ? now() : null,
         ]);
 
         return redirect()->route('admin.content-pages.index')
@@ -88,21 +91,24 @@ class ContentPageController extends Controller
      */
     public function update(Request $request, ContentPage $contentPage): RedirectResponse
     {
+        \Log::info('ContentPage Update - Raw Input:', $request->all());
+        
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|unique:content_pages,slug,'.$contentPage->id,
             'content' => 'required|string',
-            'is_published' => 'sometimes|boolean',
+            'is_published' => 'boolean',
         ]);
-
-        $isPublished = $validated['is_published'] ?? false;
+        
+        \Log::info('ContentPage Update - Validated:', $validated);
+        \Log::info('ContentPage Update - is_published type:', ['type' => gettype($validated['is_published'] ?? null), 'value' => $validated['is_published'] ?? 'null']);
 
         $contentPage->update([
             'title' => $validated['title'],
             'slug' => $validated['slug'],
             'content' => $validated['content'],
-            'is_published' => $isPublished,
-            'published_at' => $isPublished ? now() : null,
+            'is_published' => $validated['is_published'] ?? false,
+            'published_at' => ($validated['is_published'] ?? false) ? now() : null,
         ]);
 
         return redirect()->route('admin.content-pages.index')

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Switch } from '@/components/ui/switch'
 import { Link, useForm } from '@inertiajs/vue3'
 
 defineOptions({ layout: AdminLayout })
@@ -122,23 +122,21 @@ const submit = () => {
                 </div>
 
                 <!-- Published Status -->
-                <div class="space-y-2">
-                  <div class="flex items-center space-x-2">
-                    <Checkbox
-                      id="is_published"
-                      :checked="Boolean(form.is_published)"
-                      @update:checked="(value) => { form.is_published = Boolean(value) }"
-                    />
-                    <Label
-                      for="is_published"
-                      class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                    >
-                      Publier immédiatement
+                <div class="flex items-center justify-between rounded-lg border-2 p-4 bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20 border-green-200 dark:border-green-800">
+                  <div class="flex-1">
+                    <Label for="is_published" class="text-base font-semibold cursor-pointer">
+                      Publier l'article
                     </Label>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      <span v-if="form.is_published">✅ Sera publié</span>
+                      <span v-else>📄 Sera en brouillon</span>
+                    </p>
                   </div>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">
-                    Statut : <span :class="form.is_published ? 'text-green-600 font-medium' : 'text-gray-600'">{{ form.is_published ? '✓ Sera publié' : '○ Sera enregistré comme brouillon' }}</span>
-                  </p>
+                  <Switch
+                    id="is_published"
+                    v-model:checked="form.is_published"
+                    class="scale-125"
+                  />
                 </div>
 
                 <!-- Actions -->
