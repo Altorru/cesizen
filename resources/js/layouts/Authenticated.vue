@@ -138,6 +138,23 @@ const sidebarItems = computed(() => {
               <!-- Center: Navigation links -->
               <div class="hidden md:flex items-center gap-8">
                 <Link
+                  href="/"
+                  :class="[
+                    'font-medium transition-all relative group',
+                    isActive('/') 
+                      ? 'text-green-500 dark:text-green-400' 
+                      : 'text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
+                  ]"
+                >
+                  Accueil
+                  <span 
+                    :class="[
+                      'absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-green-500 to-yellow-400 transition-all',
+                      isActive('/') ? 'w-full' : 'w-0 group-hover:w-full'
+                    ]"
+                  ></span>
+                </Link>
+                <Link
                   href="/articles"
                   :class="[
                     'font-medium transition-all relative group',
