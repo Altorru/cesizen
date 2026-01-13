@@ -29,15 +29,10 @@ const sidebarItems = computed(() => {
           icon: 'i-lucide-shield',
           to: '/admin',
         },
-        {
-          label: 'Articles',
-          icon: 'i-lucide-file-text',
-          to: '/admin/content-pages',
-        },
       ],
       [
         {
-          label: 'Gestion du Contenu',
+          label: 'Gestion des Articles',
           icon: 'i-lucide-file-text',
           type: 'label',
         },
@@ -76,11 +71,6 @@ const sidebarItems = computed(() => {
           label: 'Tableau de Bord',
           icon: 'i-lucide-layout-dashboard',
           to: '/dashboard',
-        },
-        {
-          label: 'Articles',
-          icon: 'i-lucide-file-text',
-          to: '/admin/content-pages',
         },
       ],
       [
