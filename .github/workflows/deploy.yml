@@ -22,13 +22,26 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            # Vérifier si le dossier existe, sinon le créer
+            if [ ! -d "${{ secrets.APP_PATH }}" ]; then
+              echo "📁 Création du dossier de l'application..."
+              mkdir -p ${{ secrets.APP_PATH }}
+            fi
+            
             cd ${{ secrets.APP_PATH }}
             
-            # Activer le mode maintenance
-            php artisan down
-            
-            # Récupérer les derniers changements
-            git pull origin main
+            # Premier déploiement : cloner le repository
+            if [ ! -d ".git" ]; then
+              echo "📦 Premier déploiement - Clonage du repository..."
+              git clone ${{ secrets.REPO_URL }} .
+            else
+              echo "🔄 Mise à jour du code..."
+              # Activer le mode maintenance
+              php artisan down || true
+              
+              # Récupérer les derniers changements
+              git pull origin main
+            fi
             
             # Installer les dépendances PHP
             composer install --no-dev --optimize-autoloader --no-interaction
