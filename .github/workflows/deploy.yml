@@ -50,7 +50,7 @@ jobs:
 
       - name: Upload files via LFTP
         run: |
-          lftp -e "set sftp:auto-confirm yes; mirror -R -v --exclude .git/ --exclude .github/ --exclude node_modules/ --exclude vendor/ --exclude storage/logs/ --exclude storage/framework/cache/ --exclude storage/framework/sessions/ --exclude storage/framework/views/ . ${{ secrets.APP_PATH }}; quit" -u "${{ secrets.SSH_USERNAME }}","${{ secrets.SSH_PASSWORD }}" sftp://"${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}"
+          lftp -e "set sftp:auto-confirm yes; mirror -R -v --only-newer --parallel=4 --exclude .git/ --exclude .github/ --exclude node_modules/ --exclude vendor/ --exclude storage/logs/ --exclude storage/framework/cache/ --exclude storage/framework/sessions/ --exclude storage/framework/views/ --exclude .env . ${{ secrets.APP_PATH }}; quit" -u "${{ secrets.SSH_USERNAME }}","${{ secrets.SSH_PASSWORD }}" sftp://"${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}"
 
       - name: Deploy on server
         run: |
