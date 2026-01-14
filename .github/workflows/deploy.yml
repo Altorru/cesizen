@@ -7,61 +7,76 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Server
+    name: Deploy to Production Server
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Server via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            # Vérifier si le dossier existe, sinon le créer
-            if [ ! -d "${{ secrets.APP_PATH }}" ]; then
-              echo "📁 Création du dossier de l'application..."
-              mkdir -p ${{ secrets.APP_PATH }}
-            fi
-            
-            cd ${{ secrets.APP_PATH }}
-            
-            # Premier déploiement : cloner le repository
-            if [ ! -d ".git" ]; then
-              echo "📦 Premier déploiement - Clonage du repository..."
-              git clone ${{ secrets.REPO_URL }} .
-            else
-              echo "🔄 Mise à jour du code..."
-              # Activer le mode maintenance
-              php artisan down || true
-              
-              # Récupérer les derniers changements
-              git pull origin main
-            fi
-            
-            # Installer les dépendances PHP
-            composer install --no-dev --optimize-autoloader --no-interaction
-            
-            # Installer les dépendances Node.js et builder les assets
-            npm ci
-            npm run build
-            
-            # Exécuter les migrations
-            php artisan migrate --force
-            
-            # Optimiser Laravel
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
-            
-            # Désactiver le mode maintenance
-            php artisan up
-            
-            # Nettoyer le cache applicatif
-            php artisan cache:clear
-            
-            echo "✅ Déploiement terminé avec succès !"
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass lftp rsync
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Upload files via LFTP
+        run: |
+          lftp -e "set sftp:auto-confirm yes; mirror -R -v --exclude .git/ --exclude .github/ --exclude node_modules/ --exclude vendor/ --exclude storage/logs/ --exclude storage/framework/cache/ --exclude storage/framework/sessions/ --exclude storage/framework/views/ . ${{ secrets.APP_PATH }}; quit" -u "${{ secrets.SSH_USERNAME }}","${{ secrets.SSH_PASSWORD }}" sftp://"${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}"
+
+      - name: Deploy on server
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" <<'EOF'
+          cd "${{ secrets.APP_PATH }}"
+          
+          echo "📦 Déploiement en cours..."
+          
+          # Mettre l'application en maintenance
+          php artisan down
+          
+          # Vérifier et exécuter install.sh si présent
+          if [ -f install.sh ]; then
+            echo "🔧 Exécution de install.sh..."
+            chmod +x install.sh
+            ./install.sh
+          fi
+          
+          # Créer la base de données SQLite si nécessaire
+          if [ ! -f database/database.sqlite ]; then
+            echo "💾 Création de la base de données SQLite..."
+            mkdir -p database
+            touch database/database.sqlite
+          fi
+          
+          # Installer les dépendances Composer (production)
+          echo "📥 Installation des dépendances Composer..."
+          composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
+          
+          # Effacer les caches et optimiser
+          echo "⚡ Optimisation de Laravel..."
+          php artisan cache:clear
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          
+          # Exécuter les migrations
+          echo "🗄️ Exécution des migrations..."
+          php artisan migrate --force
+          
+          # Créer le lien symbolique storage
+          php artisan storage:link
+          
+          # Redémarrer les queues
+          php artisan queue:restart
+          
+          # Remettre l'application en ligne
+          php artisan up
+          
+          echo "✅ Déploiement terminé avec succès !"
+          EOF
