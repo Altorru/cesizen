@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { Head, Link } from '@inertiajs/vue3'
 import GuestLayout from '@/layouts/Guest.vue'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Link } from '@inertiajs/vue3'
 
 defineOptions({ layout: GuestLayout })
 
@@ -46,7 +46,7 @@ const features = [
 </script>
 
 <template>
-  <Head title="Bienvenue sur CESIZen - Votre Compagnon de Bien-Être Mental" />
+  <Head title="CESIZen - Votre Compagnon de Bien-Être Mental" />
 
   <!-- Hero Section -->
   <section class="container mx-auto px-6 py-20 md:py-28">

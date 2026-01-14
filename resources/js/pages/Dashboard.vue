@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { Head, Link } from '@inertiajs/vue3'
 import Layout from '@/layouts/Authenticated.vue'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Link } from '@inertiajs/vue3'
 
 defineOptions({ layout: Layout })
 
@@ -36,6 +36,8 @@ const quickLinks = [
 </script>
 
 <template>
+  <Head title="Tableau de bord - CESIZen" />
+
   <div class="p-6 space-y-8 max-w-7xl mx-auto">
     <!-- Welcome Section -->
     <div>
