@@ -34,48 +34,6 @@
 | **US-05** | Champs vides | Tous les champs vides | ❌ Messages d'erreur sur chaque champ obligatoire | **Haute** |
 | **US-06** | Injection SQL tentée | **Email:** test@test.fr<br>**Nom:** ' OR '1'='1<br>**Mot de passe:** Test123!@# | ✅ Données échappées correctement<br>❌ Aucune injection réussie | **Critique** |
 
-**Procédure de Test US-01 (Détaillée) :**
-
-```gherkin
-ETANT DONNÉ que je suis sur la page d'inscription (/register)
-ET que je suis déconnecté
-
-QUAND je saisis "nouvel.user@test.fr" dans le champ "Email"
-ET je saisis "Jean Dupont" dans le champ "Nom complet"
-ET je saisis "Test123!@#" dans le champ "Mot de passe"
-ET je saisis "Test123!@#" dans le champ "Confirmation du mot de passe"
-ET je clique sur le bouton "S'inscrire"
-
-ALORS je suis redirigé vers "/dashboard"
-ET je vois le message "Bienvenue sur CESIZen !"
-ET un email de confirmation est envoyé à "nouvel.user@test.fr"
-ET un nouvel enregistrement existe dans la table "users" avec :
-  - email = "nouvel.user@test.fr"
-  - name = "Jean Dupont"
-  - role = "user"
-  - is_active = true
-  - email_verified_at = NULL (en attente de vérification)
-```
-
-**Données de Vérification (Base de Données) :**
-
-```sql
--- Vérifier la création du compte
-SELECT id, uuid, name, email, role, is_active, email_verified_at, created_at
-FROM users
-WHERE email = 'nouvel.user@test.fr';
-
--- Résultat attendu :
--- id: 2 (ou suivant)
--- uuid: [UUID valide]
--- name: Jean Dupont
--- email: nouvel.user@test.fr
--- role: user
--- is_active: 1
--- email_verified_at: NULL
--- created_at: [Timestamp actuel]
-```
-
 #### 1.1.2 Connexion Utilisateur
 
 | ID Test | Scénario | Données de Test | Résultat Attendu | Priorité |
@@ -87,26 +45,6 @@ WHERE email = 'nouvel.user@test.fr';
 | **US-11** | Brute force (5 tentatives) | 5 tentatives avec mauvais mot de passe | ❌ Compte bloqué temporairement (15 min)<br>❌ Message : "Trop de tentatives" | **Critique** |
 | **US-12** | Remember me activé | **Email:** user@cesizen.fr<br>**Mot de passe:** user123<br>**Remember:** Coché | ✅ Cookie "remember_token" créé<br>✅ Session persiste après fermeture navigateur | **Moyenne** |
 
-**Procédure de Test US-07 (Détaillée) :**
-
-```gherkin
-ETANT DONNÉ que je suis sur la page de connexion (/login)
-ET que le compte "user@cesizen.fr" existe avec mot de passe "user123"
-ET que je suis déconnecté
-
-QUAND je saisis "user@cesizen.fr" dans le champ "Email"
-ET je saisis "user123" dans le champ "Mot de passe"
-ET je clique sur le bouton "Se connecter"
-
-ALORS je suis redirigé vers "/dashboard"
-ET la navigation affiche "Mon compte"
-ET je peux voir mon nom "User CESIZen" dans l'en-tête
-ET une session est créée dans la table "sessions" avec :
-  - user_id = [ID de l'utilisateur]
-  - ip_address = [IP du client]
-  - user_agent = [Navigateur utilisé]
-```
-
 #### 1.1.3 Gestion du Profil
 
 | ID Test | Scénario | Données de Test | Résultat Attendu | Priorité |
@@ -116,29 +54,6 @@ ET une session est créée dans la table "sessions" avec :
 | **US-15** | Changer le mot de passe | **Ancien:** user123<br>**Nouveau:** NewPass456!@<br>**Confirmation:** NewPass456!@ | ✅ Mot de passe hashé et stocké<br>✅ Message de succès<br>✅ Peut se reconnecter avec nouveau MDP | **Haute** |
 | **US-16** | Ancien mot de passe incorrect | **Ancien:** mauvais-mdp<br>**Nouveau:** NewPass456!@ | ❌ Erreur : "Mot de passe actuel incorrect"<br>❌ Mot de passe non changé | **Haute** |
 | **US-17** | Confirmation MDP différente | **Nouveau:** NewPass456!@<br>**Confirmation:** Different123!@ | ❌ Erreur : "Les mots de passe ne correspondent pas" | **Moyenne** |
-
-**Procédure de Test US-15 (Détaillée) :**
-
-```gherkin
-ETANT DONNÉ que je suis connecté en tant que "user@cesizen.fr"
-ET que je suis sur la page "/profile/security"
-
-QUAND je saisis "user123" dans le champ "Mot de passe actuel"
-ET je saisis "NewPass456!@" dans le champ "Nouveau mot de passe"
-ET je saisis "NewPass456!@" dans le champ "Confirmer le mot de passe"
-ET je clique sur "Mettre à jour le mot de passe"
-
-ALORS je vois le message "Mot de passe modifié avec succès"
-ET je suis déconnecté automatiquement
-ET je suis redirigé vers "/login"
-
-QUAND je me reconnecte avec "NewPass456!@"
-ALORS la connexion réussit
-
-ET en base de données :
-  - La colonne "password" de l'utilisateur a changé
-  - Le hash bcrypt est différent de l'ancien
-```
 
 #### 1.1.4 Déconnexion
 
@@ -156,22 +71,6 @@ ET en base de données :
 | **US-22** | Admin désactive un user | Admin | Désactiver user@cesizen.fr | ✅ Champ is_active = false en BDD<br>✅ User ne peut plus se connecter | **Haute** |
 | **US-23** | User désactivé tente connexion | User désactivé | Se connecter | ❌ Erreur : "Votre compte a été désactivé"<br>❌ Connexion refusée | **Haute** |
 
-**Procédure de Test US-21 (Sécurité Critique) :**
-
-```gherkin
-ETANT DONNÉ que je suis connecté en tant que "user@cesizen.fr" (rôle = user)
-
-QUAND je tente d'accéder directement à "https://cesizen.altorru.fr/admin"
-
-ALORS je reçois une erreur HTTP 403
-ET je vois le message "Vous n'avez pas les permissions pour accéder à cette page"
-ET je suis redirigé vers "/dashboard"
-
-ET dans les logs :
-  - Un événement de tentative d'accès non autorisé est enregistré
-  - L'IP et user_id sont loggés
-```
-
 ---
 
 ### 1.2 Module Informations (Content Pages)
@@ -186,31 +85,6 @@ ET dans les logs :
 | **INFO-04** | Affichage responsive mobile | Page quelconque | ✅ Lisible sur mobile (< 768px)<br>✅ Navigation adaptée<br>✅ Images redimensionnées | **Haute** |
 | **INFO-05** | Performance de chargement | Page avec 5000 mots | ✅ Temps de chargement < 2 secondes<br>✅ Lighthouse Score > 90 | **Moyenne** |
 
-**Procédure de Test INFO-01 (Détaillée) :**
-
-```gherkin
-ETANT DONNÉ qu'une page "À propos" existe avec :
-  - slug: "a-propos"
-  - title: "À propos de CESIZen"
-  - content: "[Contenu Markdown]"
-  - is_published: true
-  - published_at: "2026-03-01 10:00:00"
-
-QUAND je visite "https://cesizen.altorru.fr/infos/a-propos"
-
-ALORS je vois le titre "À propos de CESIZen"
-ET le contenu Markdown est rendu en HTML
-ET les titres H1, H2, H3 sont stylisés
-ET les liens sont cliquables
-ET les images (le cas échéant) sont chargées
-ET le footer affiche "Publié le 1er mars 2026"
-
-ET la requête SQL exécutée est :
-SELECT * FROM content_pages 
-WHERE slug = 'a-propos' 
-AND is_published = 1;
-```
-
 #### 1.2.2 Création de Pages (Admin)
 
 | ID Test | Scénario | Données | Résultat Attendu | Priorité |
@@ -220,41 +94,6 @@ AND is_published = 1;
 | **INFO-08** | Prévisualiser avant publication | Page en brouillon | ✅ Mode prévisualisation accessible<br>✅ Bandeau "Brouillon" affiché | **Moyenne** |
 | **INFO-09** | Publier une page | is_published: false → true | ✅ is_published = 1<br>✅ published_at = timestamp actuel<br>✅ Page visible publiquement | **Haute** |
 | **INFO-10** | Markdown rendu correctement | **Contenu:** # Titre\n\n**Gras**\n\n- Liste | ✅ HTML généré correct<br>✅ Styles appliqués | **Moyenne** |
-
-**Procédure de Test INFO-06 (Détaillée) :**
-
-```gherkin
-ETANT DONNÉ que je suis connecté en tant qu'admin
-ET que je suis sur "/admin/content-pages/create"
-
-QUAND je remplis le formulaire :
-  - Titre: "Conseils bien-être"
-  - Slug: "conseils-bien-etre" (auto-généré depuis titre)
-  - Contenu: "## Introduction\n\nLorem ipsum dolor sit amet..."
-  - Publié: "Non" (case décochée)
-
-ET je clique sur "Enregistrer"
-
-ALORS je suis redirigé vers "/admin/content-pages"
-ET je vois le message "Page créée avec succès"
-ET dans la liste, la page "Conseils bien-être" apparaît avec :
-  - Badge "Brouillon"
-  - Date de création
-  - Bouton "Modifier" et "Prévisualiser"
-
-ET en base de données :
-INSERT INTO content_pages VALUES (
-  '[UUID]',
-  'conseils-bien-etre',
-  'Conseils bien-être',
-  '## Introduction\n\nLorem ipsum...',
-  0,  -- is_published
-  NULL,  -- published_at
-  [ID_ADMIN],  -- created_by
-  NOW(),
-  NOW()
-);
-```
 
 #### 1.2.3 Modification de Pages (Admin)
 
@@ -295,34 +134,6 @@ INSERT INTO content_pages VALUES (
 | **DASH-07** | Tri des colonnes | Clic sur en-tête "Date création" | ✅ Tri ascendant/descendant<br>✅ Indicateur de tri visible | **Basse** |
 | **DASH-08** | Export données (bonus) | Clic "Exporter CSV" | ✅ Fichier users_export.csv téléchargé<br>✅ Format correct | **Basse** |
 
-**Procédure de Test DASH-04 (Détaillée) :**
-
-```gherkin
-ETANT DONNÉ que je suis connecté en tant qu'admin
-ET qu'il existe :
-  - 127 utilisateurs au total
-  - 12 nouveaux inscrits dans les 7 derniers jours
-  - 8 pages publiées
-  - 3 pages en brouillon
-
-QUAND je visite "/admin"
-
-ALORS je vois 4 cartes statistiques :
-  │ Utilisateurs │ Nouveaux (7j) │ Pages publiées │ Brouillons │
-  │     127      │      12       │       8        │     3      │
-
-ET je vois un graphique "Évolution des inscriptions"
-  - Axe X : 7 derniers jours
-  - Axe Y : Nombre d'inscriptions
-  - Données correctes pour chaque jour
-
-ET je vois un tableau "Dernières activités" avec :
-  - 10 dernières actions (inscriptions, publications)
-  - Date/Heure
-  - Type d'action
-  - Utilisateur concerné
-```
-
 #### 1.3.3 Notifications
 
 | ID Test | Scénario | Déclencheur | Résultat Attendu | Priorité |
@@ -347,186 +158,6 @@ La procédure de validation vise à garantir que le système CESIZen répond aux
 | **Chef de Projet MOE** | Coordonne les tests, présente les résultats |
 | **Équipe Technique** | Exécute les tests, corrige les anomalies |
 | **Testeurs** | Reproduisent les scénarios, documentent les bugs |
-
-### 2.3 Environnements de Test
-
-```
-┌──────────────────────────────────────────────────┐
-│          ENVIRONNEMENTS DE VALIDATION            │
-├──────────────────────────────────────────────────┤
-│ 1. Développement (localhost)                     │
-│    → Tests unitaires et d'intégration            │
-│    → Corrections rapides                         │
-│                                                  │
-│ 2. Recette/Staging (recette.cesizen.fr)         │
-│    → Tests fonctionnels complets                 │
-│    → Données anonymisées                         │
-│    → Environnement ISO production                │
-│                                                  │
-│ 3. Production (cesizen.fr)                       │
-│    → Tests de fumée post-déploiement             │
-│    → Monitoring continu                          │
-└──────────────────────────────────────────────────┘
-```
-
-### 2.4 Phases de Validation
-
-#### Phase 1 : Validation Technique (Interne)
-
-**Durée estimée :** 2 jours  
-**Responsable :** Équipe Technique
-
-**Actions :**
-1. Exécution des tests automatisés (Pest PHP)
-   ```bash
-   php artisan test --coverage
-   ```
-   - **Objectif :** Couverture de code ≥ 80%
-   
-2. Tests de sécurité
-   - Scan de vulnérabilités (OWASP Top 10)
-   - Test d'injection SQL
-   - Test XSS
-   - Test CSRF
-   
-3. Tests de performance
-   - Temps de réponse < 500ms (pages simples)
-   - Temps de réponse < 2s (pages complexes)
-   - Test de charge (100 utilisateurs simultanés)
-
-4. Validation responsive
-   - Desktop (1920x1080, 1366x768)
-   - Tablette (768x1024)
-   - Mobile (375x667, 414x896)
-
-**Critères de passage :**
-- ✅ 100% des tests unitaires passent
-- ✅ 0 vulnérabilité critique
-- ✅ Performance conforme aux objectifs
-
-#### Phase 2 : Validation Fonctionnelle (Cahier de Tests)
-
-**Durée estimée :** 3 jours  
-**Responsable :** Testeurs + Chef de Projet
-
-**Actions :**
-1. Exécution systématique de tous les scénarios du cahier de tests (sections 1.1, 1.2, 1.3)
-2. Documentation des résultats dans un fichier de suivi :
-
-   ```markdown
-   | ID Test | Statut | Commentaires | Capture | Anomalie ID |
-   |---------|--------|--------------|---------|-------------|
-   | US-01   | ✅ OK  | RAS          | screenshot_us01.png | - |
-   | US-02   | ❌ KO  | Message d'erreur peu clair | - | BUG-001 |
-   | ...     |        |              |         |             |
-   ```
-
-3. Classification des anomalies :
-   - **Bloquant** : empêche l'utilisation d'une fonction essentielle
-   - **Majeur** : fonction dégradée mais contournable
-   - **Mineur** : problème d'ergonomie ou visuel
-   - **Amélioration** : suggestion non bloquante
-
-**Critères de passage :**
-- ✅ 100% des tests "Haute Priorité" et "Critique" passent
-- ✅ 0 anomalie bloquante
-- ✅ < 3 anomalies majeures
-
-#### Phase 3 : Recette Utilisateur (UAT)
-
-**Durée estimée :** 2 jours  
-**Responsable :** Maître d'Ouvrage + Utilisateurs Pilotes
-
-**Actions :**
-1. Démonstration guidée des fonctionnalités
-2. Tests en conditions réelles (données métier)
-3. Validation ergonomique et UX
-4. Retours utilisateurs documentés
-
-**Critères de passage :**
-- ✅ Fonctionnalités conformes aux attentes métier
-- ✅ Expérience utilisateur satisfaisante
-- ✅ Formation utilisateurs prévue
-
-#### Phase 4 : Validation de Sécurité
-
-**Durée estimée :** 1 jour  
-**Responsable :** Expert Sécurité ou Équipe Technique
-
-**Actions :**
-1. Audit de sécurité applicative
-   - Authentification robuste (Laravel Fortify)
-   - Gestion des sessions sécurisée
-   - Protection CSRF
-   - Échappement des données (XSS)
-   - Hashage des mots de passe (bcrypt)
-   
-2. Audit infrastructure
-   - HTTPS activé (TLS 1.3)
-   - En-têtes de sécurité (CSP, X-Frame-Options, etc.)
-   - Pare-feu configuré
-   - Sauvegardes automatiques
-
-**Critères de passage :**
-- ✅ Audit de sécurité validé
-- ✅ Conformité RGPD (données personnelles)
-
-### 2.5 Gestion des Anomalies
-
-**Processus de traitement :**
-
-```
-1. DÉTECTION
-   ↓
-2. DOCUMENTATION (dans le tableau de suivi)
-   - Description
-   - Étapes de reproduction
-   - Capture d'écran
-   - Criticité
-   ↓
-3. PRIORISATION
-   - Bloquant → Correction immédiate
-   - Majeur → Correction avant recette
-   - Mineur → Correction avant production ou backlog
-   ↓
-4. CORRECTION
-   - Développement du correctif
-   - Tests unitaires
-   ↓
-5. VÉRIFICATION
-   - Re-test du scénario
-   - Validation de la correction
-   ↓
-6. CLÔTURE
-   - Mise à jour du statut dans le tableau
-```
-
-### 2.6 Jalons de Validation
-
-| Jalon | Date Cible | Livrables |
-|-------|-----------|-----------|
-| **J0** | 8 mars 2026 | Début des tests - Environnement de recette prêt |
-| **J+2** | 10 mars 2026 | Validation technique terminée - Rapport de tests automatisés |
-| **J+5** | 13 mars 2026 | Validation fonctionnelle terminée - Tableau de suivi complété |
-| **J+7** | 15 mars 2026 | UAT terminée - Retours utilisateurs documentés |
-| **J+8** | 16 mars 2026 | Audit de sécurité terminé - Rapport de sécurité |
-| **J+9** | 17 mars 2026 | **Signature du PV de Recette** |
-| **J+10** | 18 mars 2026 | Déploiement en production |
-
-### 2.7 Critères de Réussite Globaux
-
-Pour que la recette soit validée, les conditions suivantes doivent être remplies :
-
-- [x] **Taux de réussite des tests fonctionnels ≥ 95%**
-- [x] **0 anomalie bloquante**
-- [x] **≤ 3 anomalies majeures**
-- [x] **Couverture de code ≥ 80%**
-- [x] **Performance conforme (< 2s chargement pages)**
-- [x] **Compatibilité navigateurs : Chrome, Firefox, Safari, Edge (dernières versions)**
-- [x] **Responsive : Mobile, Tablette, Desktop**
-- [x] **Accessibilité : Niveau AA WCAG 2.1 (minimum)**
-- [x] **Sécurité : 0 vulnérabilité critique**
-- [x] **Documentation : Complète et à jour**
 
 ---
 
