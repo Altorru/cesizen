@@ -1,7 +1,7 @@
 # Cahier de Tests - CESIZen
 
-**Version :** 1.0  
-**Date :** 9 Mars 2026  
+**Version :** 1.1
+**Date :** 12 Mars 2026  
 **Projet :** Application de gestion du stress et de la santé mentale
 
 ---
