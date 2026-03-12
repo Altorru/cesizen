@@ -1,6 +1,6 @@
 # Cahier de Tests - CESIZen
 
-**Version :** 1.1  
+**Version :** 1.2  
 **Date :** 12 Mars 2026  
 **Projet :** Application de gestion du stress et de la santé mentale
 
@@ -25,28 +25,28 @@
 
 | ID Test | Scénario | Données de Test | Résultat Attendu | Priorité |
 |---------|----------|-----------------|------------------|----------|
-| **US-01** | Inscription réussie | **Email:** nouvel.user@test.fr<br>**Nom:** Jean Dupont<br>**Mot de passe:** Test123!@# | ✅ Compte créé<br>✅ Email de confirmation envoyé<br>✅ Redirection vers dashboard<br>✅ Message de succès affiché | **Haute** |
-| **US-02** | Email déjà utilisé | **Email:** admin@cesizen.fr (existant)<br>**Nom:** Test User<br>**Mot de passe:** Test123!@# | ❌ Erreur affichée : "Cet email est déjà utilisé"<br>❌ Compte non créé | **Haute** |
-| **US-03** | Email invalide | **Email:** invalide-email<br>**Nom:** Test User<br>**Mot de passe:** Test123!@# | ❌ Erreur de validation en temps réel<br>❌ Bouton soumission désactivé | **Moyenne** |
-| **US-04** | Mot de passe trop court | **Email:** test@test.fr<br>**Nom:** Test User<br>**Mot de passe:** 123 | ❌ Erreur : "Le mot de passe doit contenir au moins 8 caractères" | **Haute** |
+| **US-01** | Inscription réussie | **Email:** <nouvel.user@test.fr><br>**Nom:** Jean Dupont<br>**Mot de passe:** Test123!@# | ✅ Compte créé<br>✅ Redirection vers dashboard | **Haute** |
+| **US-02** | Email déjà utilisé | **Email:** <admin@cesizen.com> (existant)<br>**Nom:** Test User<br>**Mot de passe:** Test123!@# | ❌ Erreur affichée : "Cet email est déjà utilisé"<br>❌ Compte non créé | **Haute** |
+| **US-03** | Email invalide | **Email:** invalide-email<br>**Nom:** Test User<br>**Mot de passe:** Test123!@# | ❌ Erreur de validation en temps réel | **Moyenne** |
+| **US-04** | Mot de passe trop court | **Email:** <test@test.fr><br>**Nom:** Test User<br>**Mot de passe:** 123 | ❌ Erreur : "Le mot de passe doit contenir au moins 8 caractères" | **Haute** |
 | **US-05** | Champs vides | Tous les champs vides | ❌ Messages d'erreur sur chaque champ obligatoire | **Haute** |
-| **US-06** | Injection SQL tentée | **Email:** test@test.fr<br>**Nom:** ' OR '1'='1<br>**Mot de passe:** Test123!@# | ✅ Données échappées correctement<br>❌ Aucune injection réussie | **Critique** |
+| **US-06** | Injection SQL tentée | **Email:** <test@test.fr><br>**Nom:** ' OR '1'='1<br>**Mot de passe:** Test123!@# | ✅ Données échappées correctement<br>❌ Aucune injection réussie | **Critique** |
 
 #### 1.1.2 Connexion Utilisateur
 
 | ID Test | Scénario | Données de Test | Résultat Attendu | Priorité |
 |---------|----------|-----------------|------------------|----------|
-| **US-07** | Connexion réussie (user) | **Email:** user@cesizen.fr<br>**Mot de passe:** user123 | ✅ Redirection vers /dashboard<br>✅ Session créée<br>✅ Token CSRF valide | **Haute** |
-| **US-08** | Connexion réussie (admin) | **Email:** admin@cesizen.fr<br>**Mot de passe:** admin123 | ✅ Redirection vers /admin<br>✅ Accès aux fonctions admin | **Haute** |
-| **US-09** | Mot de passe incorrect | **Email:** user@cesizen.fr<br>**Mot de passe:** mauvais-mdp | ❌ Erreur : "Identifiants incorrects"<br>❌ Pas de session créée<br>❌ Reste sur /login | **Haute** |
-| **US-10** | Email inexistant | **Email:** inexistant@test.fr<br>**Mot de passe:** Test123!@# | ❌ Erreur : "Identifiants incorrects" (message générique) | **Haute** |
+| **US-07** | Connexion réussie (user) | XX | ✅ Redirection vers /dashboard<br>✅ Session créée<br>✅ Token CSRF valide | **Haute** |
+| **US-08** | Connexion réussie (admin) | XX | ✅ Redirection vers /admin<br>✅ Accès aux fonctions admin | **Haute** |
+| **US-09** | Mot de passe incorrect | **Email:** <admin@cesizen.com><br>**Mot de passe:** mauvais-mdp | ❌ Erreur : "Identifiants incorrects"<br>❌ Pas de session créée<br>❌ Reste sur /login | **Haute** |
+| **US-10** | Email inexistant | **Email:** <inexistant@test.fr><br>**Mot de passe:** Test123!@# | ❌ Erreur : "Identifiants incorrects" (message générique) | **Haute** |
 
 #### 1.1.3 Gestion du Profil
 
 | ID Test | Scénario | Données de Test | Résultat Attendu | Priorité |
 |---------|----------|-----------------|------------------|----------|
 | **US-11** | Modifier le nom | **Nouveau nom:** Marie Martin | ✅ Nom mis à jour en BDD<br>✅ Message de succès<br>✅ Affichage immédiat du nouveau nom | **Moyenne** |
-| **US-12** | Modifier l'email | **Nouvel email:** marie.martin@test.fr | ✅ Email mis à jour<br>✅ email_verified_at réinitialisé<br>✅ Nouvel email de vérification envoyé | **Haute** |
+| **US-12** | Modifier l'email | **Nouvel email:** <marie.martin@test.fr> | ✅ Email mis à jour<br>✅ Nouvel email de vérification envoyé | **Haute** |
 | **US-13** | Changer le mot de passe | **Ancien:** user123<br>**Nouveau:** NewPass456!@<br>**Confirmation:** NewPass456!@ | ✅ Mot de passe hashé et stocké<br>✅ Message de succès<br>✅ Peut se reconnecter avec nouveau MDP | **Haute** |
 | **US-14** | Ancien mot de passe incorrect | **Ancien:** mauvais-mdp<br>**Nouveau:** NewPass456!@ | ❌ Erreur : "Mot de passe actuel incorrect"<br>❌ Mot de passe non changé | **Haute** |
 | **US-15** | Confirmation MDP différente | **Nouveau:** NewPass456!@<br>**Confirmation:** Different123!@ | ❌ Erreur : "Les mots de passe ne correspondent pas" | **Moyenne** |
@@ -64,7 +64,7 @@
 |---------|----------|-------------|--------|------------------|----------|
 | **US-18** | Admin accède à /admin | Admin | Visiter /admin | ✅ Page affichée<br>✅ Liste des utilisateurs visible | **Haute** |
 | **US-19** | User tente d'accéder à /admin | User | Visiter /admin | ❌ Erreur 403 Forbidden<br>❌ Message "Accès refusé" | **Critique** |
-| **US-20** | Admin désactive un user | Admin | Désactiver user@cesizen.fr | ✅ Champ is_active = false en BDD<br>✅ User ne peut plus se connecter | **Haute** |
+| **US-20** | Admin désactive un user | Admin | Désactiver <user@cesizen.fr> | ✅ Champ is_active = false en BDD<br>✅ User ne peut plus se connecter | **Haute** |
 | **US-21** | User désactivé tente connexion | User désactivé | Se connecter | ❌ Erreur : "Votre compte a été désactivé"<br>❌ Connexion refusée | **Haute** |
 
 ---
@@ -85,24 +85,22 @@
 |---------|----------|---------|------------------|----------|
 | **INFO-04** | Créer une nouvelle page | **Titre:** Conseils bien-être<br>**Slug:** conseils-bien-etre<br>**Contenu:** Lorem ipsum...<br>**Publié:** Non | ✅ Page créée en BDD<br>✅ UUID généré<br>✅ created_by = ID admin<br>✅ Slug unique | **Haute** |
 | **INFO-05** | Slug déjà existant | **Slug:** a-propos (existant) | ❌ Erreur : "Ce slug est déjà utilisé"<br>❌ Page non créée | **Haute** |
-| **INFO-06** | Prévisualiser avant publication | Page en brouillon | ✅ Mode prévisualisation accessible<br>✅ Bandeau "Brouillon" affiché | **Moyenne** |
-| **INFO-07** | Publier une page | is_published: false → true | ✅ is_published = 1<br>✅ published_at = timestamp actuel<br>✅ Page visible publiquement | **Haute** |
+| **INFO-06** | Publier une page | is_published: false → true | ✅ is_published = 1<br>✅ published_at = timestamp actuel<br>✅ Page visible publiquement | **Haute** |
 
 #### 1.2.3 Modification de Pages (Admin)
 
 | ID Test | Scénario | Action | Résultat Attendu | Priorité |
 |---------|----------|--------|------------------|----------|
-| **INFO-08** | Modifier le titre | Changer "À propos" → "À propos de nous" | ✅ Titre mis à jour<br>✅ Slug inchangé (stabilité des URLs) | **Moyenne** |
-| **INFO-09** | Modifier le contenu | Ajouter un paragraphe | ✅ Contenu mis à jour<br>✅ updated_at changé | **Haute** |
-| **INFO-10** | Dépublier une page | is_published: true → false | ✅ Page n'apparaît plus côté public<br>✅ published_at conservé (historique) | **Haute** |
+| **INFO-07** | Modifier le titre | Changer "À propos" → "À propos de nous" | ✅ Titre mis à jour<br>✅ Slug inchangé (stabilité des URLs) | **Moyenne** |
+| **INFO-08** | Modifier le contenu | Ajouter un paragraphe | ✅ Contenu mis à jour<br>✅ updated_at changé | **Haute** |
+| **INFO-09** | Dépublier une page | is_published: true → false | ✅ Page n'apparaît plus côté public<br>✅ published_at conservé (historique) | **Haute** |
 
 #### 1.2.4 Suppression de Pages (Admin)
 
 | ID Test | Scénario | Action | Résultat Attendu | Priorité |
 |---------|----------|---------|------------------|----------|
-| **INFO-11** | Supprimer une page | Supprimer page ID X | ✅ Page supprimée de la BDD<br>✅ Message de confirmation<br>✅ 404 sur l'ancienne URL | **Haute** |
-| **INFO-12** | Confirmation avant suppression | Clic sur "Supprimer" | ✅ Modal de confirmation apparaît<br>✅ Possibilité d'annuler | **Moyenne** |
-| **INFO-13** | User supprimé = pages en cascade | Supprimer le créateur | ✅ Toutes ses pages supprimées (CASCADE)<br>⚠️ Alternative : réassigner les pages | **Moyenne** |
+| **INFO-10** | Supprimer une page | Supprimer page ID X | ✅ Page supprimée de la BDD<br>✅ Message de confirmation<br>✅ 404 sur l'ancienne URL | **Haute** |
+| **INFO-11** | Confirmation avant suppression | Clic sur "Supprimer" | ✅ Modal de confirmation apparaît<br>✅ Possibilité d'annuler | **Moyenne** |
 
 ---
 
@@ -120,6 +118,6 @@
 |---------|----------|--------|------------------|----------|
 | **DASH-02** | Vue d'ensemble admin | Admin se connecte | ✅ Nombre total d'utilisateurs<br>✅ Nouveaux inscrits (7j)<br>✅ Pages publiées/brouillons<br>✅ Graphiques visuels | **Haute** |
 | **DASH-03** | Liste des utilisateurs | Onglet "Utilisateurs" | ✅ Tableau paginé<br>✅ Colonnes : Nom, Email, Rôle, Statut<br>✅ Actions : Modifier, Désactiver | **Haute** |
-| **DASH-04** | Recherche utilisateur | Rechercher "dupont" | ✅ Filtrage en temps réel<br>✅ Résultats pertinents | **Moyenne** |
+| **DASH-04** | Recherche utilisateur | Rechercher "dupont" | ✅ Filtrage<br>✅ Résultats pertinents | **Moyenne** |
 
 ---
