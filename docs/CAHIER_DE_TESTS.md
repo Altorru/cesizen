@@ -12,6 +12,7 @@
    - 1.1 [Module Comptes Utilisateurs](#11-module-comptes-utilisateurs)
    - 1.2 [Module Informations](#12-module-informations)
    - 1.3 [Tableau de Bord](#13-tableau-de-bord)
+   - 1.4 [Module Exercice de Respiration](#14-module-exercice-de-respiration)
 
 ---
 
