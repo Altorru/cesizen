@@ -17,7 +17,8 @@ class EnsureUserIsActive
     {
         if ($request->user() && !$request->user()->is_active) {
             auth()->logout();
-            return redirect()->route('login')->with('error', 'Votre compte a été désactivé. Veuillez contacter un administrateur.');
+            return redirect()->route('login')
+                ->with('status', 'Votre compte a été désactivé. Veuillez contacter un administrateur.');
         }
 
         return $next($request);

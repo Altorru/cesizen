@@ -7,6 +7,11 @@ const user = computed(() => page.props.auth?.user)
 const isAdmin = computed(() => user.value?.role === 'admin')
 const open = ref(false)
 
+// Flash error message from server (e.g. access denied)
+const flashError = computed(() => (page.props.flash as { error?: string })?.error)
+const showFlashError = ref(false)
+watch(flashError, (val) => { if (val) showFlashError.value = true }, { immediate: true })
+
 // Active link detection
 const currentUrl = computed(() => page.url)
 const isActive = (path: string) => {
@@ -219,6 +224,21 @@ const sidebarItems = computed(() => {
 
           <!-- Main Content -->
           <main class="flex-1 min-h-[calc(100vh-73px)]">
+            <!-- Flash error notification -->
+            <div
+              v-if="showFlashError && flashError"
+              class="mx-auto max-w-7xl px-6 pt-4"
+            >
+              <div class="flex items-start justify-between gap-3 rounded-lg border border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950/30 px-4 py-3 text-sm text-red-700 dark:text-red-400">
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-shield-x" class="h-4 w-4 shrink-0" />
+                  <span>{{ flashError }}</span>
+                </div>
+                <button @click="showFlashError = false" class="shrink-0 hover:opacity-70">
+                  <UIcon name="i-lucide-x" class="h-4 w-4" />
+                </button>
+              </div>
+            </div>
             <slot />
           </main>
         </div>

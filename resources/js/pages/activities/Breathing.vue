@@ -176,8 +176,8 @@ onUnmounted(() => {
           </p>
         </div>
 
-        <!-- Sélection du pattern (masqué pendant l'exercice) -->
-        <div v-if="!isActive" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Sélection du pattern -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card
             v-for="pattern in patterns"
             :key="pattern.code"
@@ -185,7 +185,8 @@ onUnmounted(() => {
               'cursor-pointer transition-all hover:shadow-xl hover:-translate-y-1',
               selectedPattern?.code === pattern.code 
                 ? 'ring-2 ring-green-500 dark:ring-green-400 shadow-lg' 
-                : 'hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-700'
+                : 'hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-700',
+              isActive && selectedPattern?.code !== pattern.code ? 'opacity-60' : ''
             ]"
             @click="selectPattern(pattern)"
           >

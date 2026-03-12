@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use function abort;
+use function redirect;
 
 class EnsureUserIsAdmin
 {
@@ -18,7 +18,8 @@ class EnsureUserIsAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (! $request->user() || ! $request->user()->isAdmin()) {
-            abort(403, 'Unauthorized action.');
+            return redirect()->route('dashboard')
+                ->with('flash_error', 'Accès refusé. Vous n\'avez pas les droits nécessaires pour accéder à cette page.');
         }
 
         return $next($request);

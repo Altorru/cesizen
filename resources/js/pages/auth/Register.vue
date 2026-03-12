@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import Layout from '@/layouts/Empty.vue'
 import { login } from '@/routes'
-import { Head, Link, router } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 
 defineOptions({ layout: Layout })
 
@@ -17,18 +17,14 @@ const form = useForm({
   password_confirmation: '',
 })
 
-const errors = ref<Record<string, string>>({})
-
-router.on('error', (event) => {
-  errors.value = getErrors(event.detail.errors)
-})
-
 function onSubmit(e: Event) {
   e.preventDefault()
-  errors.value = {}
   form.password_confirmation = form.password
-  form.submit(store())
-  form.reset('password', 'password_confirmation')
+  form.submit(store(), {
+    onSuccess: () => {
+      form.reset('password', 'password_confirmation')
+    },
+  })
 }
 </script>
 
@@ -48,7 +44,7 @@ function onSubmit(e: Event) {
             autofocus
             required 
           />
-          <p v-if="errors.name" class="text-sm text-destructive">{{ errors.name }}</p>
+          <p v-if="form.errors.name" class="text-sm text-destructive">{{ form.errors.name }}</p>
         </div>
 
         <div class="space-y-2">
@@ -60,7 +56,7 @@ function onSubmit(e: Event) {
             placeholder="email@exemple.com"
             required 
           />
-          <p v-if="errors.email" class="text-sm text-destructive">{{ errors.email }}</p>
+          <p v-if="form.errors.email" class="text-sm text-destructive">{{ form.errors.email }}</p>
         </div>
 
         <div class="space-y-2">
@@ -72,7 +68,7 @@ function onSubmit(e: Event) {
             placeholder="••••••••"
             required 
           />
-          <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
+          <p v-if="form.errors.password" class="text-sm text-destructive">{{ form.errors.password }}</p>
           <p class="text-xs text-muted-foreground">Doit contenir au moins 8 caractères</p>
         </div>
 

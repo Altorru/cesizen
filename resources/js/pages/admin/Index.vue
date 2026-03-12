@@ -19,29 +19,29 @@ const props = defineProps<Props>()
 
 const quickActions = [
   {
-    title: 'New Article',
-    description: 'Create a new content page',
+    title: 'Nouvel article',
+    description: 'Créer une nouvelle page de contenu',
     icon: 'i-lucide-plus-circle',
     href: '/admin/content-pages/create',
     color: 'text-green-600 dark:text-green-400',
   },
   {
-    title: 'Manage Articles',
-    description: 'View and edit all articles',
+    title: 'Gérer les articles',
+    description: 'Voir et modifier tous les articles',
     icon: 'i-lucide-list',
     href: '/admin/content-pages',
     color: 'text-blue-600 dark:text-blue-400',
   },
   {
-    title: 'Manage Users',
-    description: 'View and manage users',
+    title: 'Gérer les utilisateurs',
+    description: 'Voir et gérer les utilisateurs',
     icon: 'i-lucide-users',
     href: '/admin/users',
     color: 'text-purple-600 dark:text-purple-400',
   },
   {
-    title: 'View Site',
-    description: 'Go to public website',
+    title: 'Voir le site',
+    description: 'Accéder au site public',
     icon: 'i-lucide-external-link',
     href: '/',
     color: 'text-gray-600 dark:text-gray-400',
@@ -54,10 +54,10 @@ const quickActions = [
     <!-- Welcome Section -->
     <div>
       <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-        Welcome to Admin Panel
+        Tableau de Bord Administrateur
       </h1>
       <p class="text-gray-600 dark:text-gray-400">
-        Manage your CESIZen application content and users
+        Gérez le contenu et les utilisateurs de CESIZen
       </p>
     </div>
 
@@ -65,54 +65,54 @@ const quickActions = [
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Card class="border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02]">
             <CardHeader class="pb-3">
-              <CardDescription>Total Articles</CardDescription>
+              <CardDescription>Total des articles</CardDescription>
               <CardTitle class="text-5xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">{{ props.stats.total_articles }}</CardTitle>
             </CardHeader>
             <CardContent>
               <div class="text-xs text-muted-foreground">
-                All content pages
+                Toutes les pages de contenu
               </div>
             </CardContent>
           </Card>
 
           <Card class="border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20">
             <CardHeader class="pb-3">
-              <CardDescription>Published</CardDescription>
+              <CardDescription>Publiés</CardDescription>
               <CardTitle class="text-5xl font-bold text-green-600 dark:text-green-400">
                 {{ props.stats.published_articles }}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div class="text-xs text-muted-foreground">
-                Live on site
+                Visibles sur le site
               </div>
             </CardContent>
           </Card>
 
           <Card class="border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20">
             <CardHeader class="pb-3">
-              <CardDescription>Drafts</CardDescription>
+              <CardDescription>Brouillons</CardDescription>
               <CardTitle class="text-5xl font-bold text-orange-600 dark:text-orange-400">
                 {{ props.stats.draft_articles }}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div class="text-xs text-muted-foreground">
-                Unpublished pages
+                Pages non publiées
               </div>
             </CardContent>
           </Card>
 
           <Card class="border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
             <CardHeader class="pb-3">
-              <CardDescription>Total Users</CardDescription>
+              <CardDescription>Total des utilisateurs</CardDescription>
               <CardTitle class="text-5xl font-bold text-blue-600 dark:text-blue-400">
                 {{ props.stats.total_users }}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div class="text-xs text-muted-foreground">
-                Registered accounts
+                Comptes enregistrés
               </div>
             </CardContent>
           </Card>
@@ -121,7 +121,7 @@ const quickActions = [
         <!-- Quick Actions -->
         <div>
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Quick Actions
+            Actions rapides
           </h2>
           <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Link

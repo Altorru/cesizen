@@ -29,7 +29,7 @@ const form = useForm({
   title: props.page.title,
   slug: props.page.slug,
   content: props.page.content,
-  is_published: Boolean(props.page.is_published),
+  is_published: !!props.page.is_published,
 })
 
 const generateSlug = () => {
@@ -145,7 +145,8 @@ const submit = () => {
                   </div>
                   <Switch
                     id="is_published"
-                    v-model:checked="form.is_published"
+                    :checked="form.is_published"
+                    @update:checked="(v: boolean) => form.is_published = v"
                     class="scale-125"
                   />
                 </div>

@@ -32,7 +32,7 @@ const form = useForm({
   password: '',
   password_confirmation: '',
   role: props.user.role,
-  is_active: props.user.is_active,
+  is_active: !!props.user.is_active,
 })
 
 const toast = useToast()
@@ -198,7 +198,8 @@ function onSubmit(e: Event) {
                 </div>
                 <Switch
                   id="is_active"
-                  v-model:checked="form.is_active"
+                  :checked="form.is_active"
+                  @update:checked="(v: boolean) => form.is_active = v"
                   class="scale-125"
                 />
               </div>
