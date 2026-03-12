@@ -1,6 +1,6 @@
 # Cahier de Tests - CESIZen
 
-**Version :** 1.6  
+**Version :** 1.7  
 **Date :** 12 Mars 2026  
 **Projet :** Application de gestion du stress et de la santé mentale
 
@@ -11,7 +11,7 @@
 1. [Cahier de Tests](#1-cahier-de-tests)
    - 1.1 [Module Comptes Utilisateurs](#11-module-comptes-utilisateurs)
    - 1.2 [Module Informations](#12-module-informations)
-   - 1.3 [Module Facultatif - Tableau de Bord](#13-module-facultatif---tableau-de-bord)
+   - 1.3 [Tableau de Bord](#13-tableau-de-bord)
 
 ---
 
@@ -119,5 +119,60 @@
 | **DASH-ADMIN-01** | Vue d'ensemble admin | - Se connecter en tant qu'administrateur<br>- Observer le tableau de bord admin | ✅ Nombre total d'utilisateurs<br>✅ Nouveaux inscrits (7j)<br>✅ Pages publiées/brouillons<br>✅ Graphiques visuels | **Haute** |
 | **DASH-ADMIN-02** | Liste des utilisateurs | - Se connecter en tant qu'administrateur<br>- Cliquer sur l'onglet "Utilisateurs"<br>- Observer la liste des utilisateurs | ✅ Tableau paginé<br>✅ Colonnes : Nom, Email, Rôle, Statut<br>✅ Actions : Modifier, Désactiver | **Haute** |
 | **DASH-ADMIN-03** | Recherche utilisateur | - Se connecter en tant qu'administrateur<br>- Aller sur l'onglet "Utilisateurs"<br>- Saisir un terme de recherche dans la barre de recherche<br>- Observer les résultats | ✅ Filtrage<br>✅ Résultats pertinents | **Moyenne** |
+
+---
+
+### 1.4 Module Exercice de Respiration
+
+#### 1.4.1 Accès et Navigation
+
+**Objectif :** Vérifier l'accès à la page d'exercice de respiration
+
+| ID Test | Titre | Scénario | Résultat Attendu | Priorité |
+|---------|----------|----------|------------------|----------|
+| **RESP-ACC-01** | Accès utilisateur connecté | - Se connecter en tant qu'utilisateur<br>- Aller sur /activities/breathing | ✅ Page affichée<br>✅ 3 patterns visibles | **Haute** |
+| **RESP-ACC-02** | Accès non connecté | - Se déconnecter<br>- Tenter d'accéder à /activities/breathing | ❌ Redirection vers la connexion | **Haute** |
+
+#### 1.4.2 Sélection et Configuration
+
+**Objectif :** Vérifier la sélection des patterns et configuration des cycles
+
+| ID Test | Titre | Scénario | Résultat Attendu | Priorité |
+|---------|----------|----------|------------------|----------|
+| **RESP-SEL-01** | Sélectionner un pattern | - Cliquer sur "Relaxation Profonde (7-4-8)" | ✅ Pattern sélectionné (bordure verte)<br>✅ Durées affichées : 7s-4s-8s | **Haute** |
+| **RESP-SEL-02** | Changer de pattern | - Sélectionner "Relaxation Profonde"<br>- Cliquer sur "Cohérence Cardiaque (5-5)" | ✅ Nouveau pattern sélectionné<br>✅ Durées affichées : 5s-5s | **Moyenne** |
+| **RESP-SEL-03** | Augmenter les cycles | - Sélectionner un pattern<br>- Cliquer 3 fois sur le bouton "+" | ✅ Nombre passe de 5 à 8 cycles | **Moyenne** |
+| **RESP-SEL-04** | Diminuer les cycles | - Sélectionner un pattern<br>- Cliquer sur le bouton "-" | ✅ Nombre diminue de 1 | **Moyenne** |
+| **RESP-SEL-05** | Limites des cycles | - Réduire à 1 et cliquer "-"<br>- Augmenter à 20 et cliquer "+" | ✅ Reste à 1 (minimum)<br>✅ Reste à 20 (maximum) | **Haute** |
+
+#### 1.4.3 Exécution de l'Exercice
+
+**Objectif :** Vérifier le déroulement de l'exercice de respiration
+
+| ID Test | Titre | Scénario | Résultat Attendu | Priorité |
+|---------|----------|----------|------------------|----------|
+| **RESP-EXE-01** | Démarrer sans pattern | - Ne rien sélectionner<br>- Observer la page | ❌ Bouton "Commencer" non visible<br>✅ Message "Sélectionnez un exercice" | **Haute** |
+| **RESP-EXE-02** | Démarrer l'exercice | - Sélectionner un pattern<br>- Cliquer sur "Commencer" | ✅ Exercice démarre<br>✅ "Inspirez" affiché<br>✅ Compte à rebours visible<br>✅ Cercle commence à grandir | **Critique** |
+| **RESP-EXE-03** | Déroulement complet | - Démarrer "Relaxation Profonde"<br>- Observer un cycle complet | ✅ Phase 1 : "Inspirez" (7s)<br>✅ Phase 2 : "Retenez" (4s)<br>✅ Phase 3 : "Expirez" (8s)<br>✅ Cycle suivant démarre | **Critique** |
+| **RESP-EXE-04** | Compteur de cycles | - Démarrer avec 3 cycles<br>- Observer le compteur | ✅ Affiche "1 / 3", puis "2 / 3", puis "3 / 3" | **Haute** |
+| **RESP-EXE-05** | Fin automatique | - Démarrer avec 2 cycles<br>- Attendre la fin complète | ✅ S'arrête après 2 cycles<br>✅ Retour à l'écran initial | **Critique** |
+
+#### 1.4.4 Arrêt et Contrôles
+
+**Objectif :** Vérifier l'arrêt de l'exercice
+
+| ID Test | Titre | Scénario | Résultat Attendu | Priorité |
+|---------|----------|----------|------------------|----------|
+| **RESP-ARR-01** | Arrêter l'exercice | - Démarrer un exercice<br>- Cliquer sur "Arrêter" | ✅ Exercice arrêté<br>✅ Retour à l'écran de sélection | **Critique** |
+| **RESP-ARR-02** | Changer pendant exercice | - Démarrer un exercice<br>- Cliquer sur un autre pattern | ✅ Exercice arrêté<br>✅ Nouveau pattern sélectionné | **Moyenne** |
+
+#### 1.4.5 Affichage et Responsive
+
+**Objectif :** Vérifier l'affichage sur différents écrans
+
+| ID Test | Titre | Scénario | Résultat Attendu | Priorité |
+|---------|----------|----------|------------------|----------|
+| **RESP-UI-01** | Affichage Mobile | - Ouvrir sur un téléphone<br>- Observer la page | ✅ Cartes empilées verticalement<br>✅ Boutons accessibles<br>✅ Texte lisible | **Critique** |
+| **RESP-UI-02** | Mode sombre | - Activer le mode sombre<br>- Observer la page | ✅ Couleurs adaptées<br>✅ Texte lisible | **Moyenne** |
 
 ---
