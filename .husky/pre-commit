@@ -1,0 +1,32 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run lint-staged to check and fix changed files
+npx lint-staged
+
+# Store exit status from lint-staged
+LINT_STAGED_EXIT=$?
+
+# Run PHP tests with Pest
+echo ""
+echo "🧪 Running PHP tests..."
+php artisan test --env=testing
+
+# Store exit status from tests
+TESTS_EXIT=$?
+
+# If either failed, exit with error
+if [ $LINT_STAGED_EXIT -ne 0 ] || [ $TESTS_EXIT -ne 0 ]; then
+  if [ $LINT_STAGED_EXIT -ne 0 ]; then
+    echo ""
+    echo "❌ Linting/formatting check failed. Please fix the issues above."
+  fi
+  if [ $TESTS_EXIT -ne 0 ]; then
+    echo ""
+    echo "❌ Some tests failed. Please fix the issues above."
+  fi
+  exit 1
+fi
+
+echo ""
+echo "✅ All checks passed!"
