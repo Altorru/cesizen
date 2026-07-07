@@ -16,7 +16,7 @@ jobs:
     outputs:
       new-version: ${{ steps.version.outputs.new-version }}
       tag: ${{ steps.version.outputs.tag }}
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -44,11 +44,11 @@ jobs:
         run: |
           LAST_TAG=${{ steps.get-version.outputs.last-tag }}
           LAST_VERSION=${LAST_TAG#v}
-          
+
           # Parse version
           IFS='.' read -r MAJOR MINOR PATCH <<< "$LAST_VERSION"
           PATCH=${PATCH:-0}
-          
+
           # Check commit messages since last tag
           if git log "$LAST_TAG"..HEAD --pretty=%B | grep -q "^BREAKING CHANGE:"; then
             NEW_MAJOR=$((MAJOR + 1))
@@ -71,10 +71,10 @@ jobs:
             NEW_PATCH=$((PATCH + 1))
             BUMP_TYPE="patch"
           fi
-          
+
           NEW_VERSION="$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
           NEW_TAG="v$NEW_VERSION"
-          
+
           echo "new-version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
           echo "bump-type=$BUMP_TYPE" >> $GITHUB_OUTPUT
@@ -83,23 +83,23 @@ jobs:
       - name: Update version files
         run: |
           NEW_VERSION=${{ steps.version.outputs.new-version }}
-          
+
           # Update package.json
           if [ -f package.json ]; then
             node -e "const pkg = require('./package.json'); pkg.version = '$NEW_VERSION'; require('fs').writeFileSync('./package.json', JSON.stringify(pkg, null, 2) + '\n');"
           fi
-          
+
           # Create or update .version file
           echo "$NEW_VERSION" > .version
-          
+
           # Create VERSION constant for PHP/Laravel
           mkdir -p config
-          cat > config/version.php << 'EOF'
+            cat > config/version.php <<'EOF'
             <?php
 
             return [
-                'current' => getenv('APP_VERSION', '0.0.0'),
-                'updated_at' => date('Y-m-d H:i:s'),
+              'current' => env('APP_VERSION', '0.0.0'),
+              'updated_at' => now()->toDateTimeString(),
             ];
             EOF
 
@@ -107,7 +107,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
+
           git add package.json .version config/version.php
           git commit -m "chore(release): bump version to ${{ steps.version.outputs.new-version }}" || true
 
@@ -125,9 +125,9 @@ jobs:
           release_name: Release ${{ steps.version.outputs.tag }}
           body: |
             ## 🎉 Release ${{ steps.version.outputs.tag }}
-            
+
             **Type:** ${{ steps.version.outputs.bump-type }}
-            
+
             This release has been automatically generated.
           draft: false
           prerelease: false
