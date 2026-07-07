@@ -10,7 +10,7 @@
     "format:check": "prettier --check resources/",
     "lint": "eslint . --fix",
     "test:php": "php artisan test",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
