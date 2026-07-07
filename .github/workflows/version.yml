@@ -1,0 +1,130 @@
+name: Auto Version
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  version:
+    name: Bump Version and Create Release
+    runs-on: ubuntu-latest
+    if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
+    outputs:
+      new-version: ${{ steps.version.outputs.new-version }}
+      tag: ${{ steps.version.outputs.tag }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Get last version
+        id: get-version
+        run: |
+          if git describe --tags --abbrev=0 2>/dev/null; then
+            LAST_TAG=$(git describe --tags --abbrev=0)
+            echo "last-tag=$LAST_TAG" >> $GITHUB_OUTPUT
+          else
+            echo "last-tag=v0.0.0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Determine version bump
+        id: version
+        run: |
+          LAST_TAG=${{ steps.get-version.outputs.last-tag }}
+          LAST_VERSION=${LAST_TAG#v}
+          
+          # Parse version
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$LAST_VERSION"
+          PATCH=${PATCH:-0}
+          
+          # Check commit messages since last tag
+          if git log "$LAST_TAG"..HEAD --pretty=%B | grep -q "^BREAKING CHANGE:"; then
+            NEW_MAJOR=$((MAJOR + 1))
+            NEW_MINOR=0
+            NEW_PATCH=0
+            BUMP_TYPE="major"
+          elif git log "$LAST_TAG"..HEAD --pretty=%B | grep -q "^feat"; then
+            NEW_MAJOR=$MAJOR
+            NEW_MINOR=$((MINOR + 1))
+            NEW_PATCH=0
+            BUMP_TYPE="minor"
+          elif git log "$LAST_TAG"..HEAD --pretty=%B | grep -q "^fix\|^bugfix"; then
+            NEW_MAJOR=$MAJOR
+            NEW_MINOR=$MINOR
+            NEW_PATCH=$((PATCH + 1))
+            BUMP_TYPE="patch"
+          else
+            NEW_MAJOR=$MAJOR
+            NEW_MINOR=$MINOR
+            NEW_PATCH=$((PATCH + 1))
+            BUMP_TYPE="patch"
+          fi
+          
+          NEW_VERSION="$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
+          NEW_TAG="v$NEW_VERSION"
+          
+          echo "new-version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
+          echo "bump-type=$BUMP_TYPE" >> $GITHUB_OUTPUT
+          echo "Version: $NEW_VERSION (bump type: $BUMP_TYPE)"
+
+      - name: Update version files
+        run: |
+          NEW_VERSION=${{ steps.version.outputs.new-version }}
+          
+          # Update package.json
+          if [ -f package.json ]; then
+            node -e "const pkg = require('./package.json'); pkg.version = '$NEW_VERSION'; require('fs').writeFileSync('./package.json', JSON.stringify(pkg, null, 2) + '\n');"
+          fi
+          
+          # Create or update .version file
+          echo "$NEW_VERSION" > .version
+          
+          # Create VERSION constant for PHP/Laravel
+          mkdir -p config
+          cat > config/version.php << 'EOF'
+            <?php
+
+            return [
+                'current' => getenv('APP_VERSION', '0.0.0'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+            EOF
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add package.json .version config/version.php
+          git commit -m "chore(release): bump version to ${{ steps.version.outputs.new-version }}" || true
+
+      - name: Create and push tag
+        run: |
+          git tag -a ${{ steps.version.outputs.tag }} -m "Release ${{ steps.version.outputs.tag }}"
+          git push origin main --tags || true
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          release_name: Release ${{ steps.version.outputs.tag }}
+          body: |
+            ## 🎉 Release ${{ steps.version.outputs.tag }}
+            
+            **Type:** ${{ steps.version.outputs.bump-type }}
+            
+            This release has been automatically generated.
+          draft: false
+          prerelease: false

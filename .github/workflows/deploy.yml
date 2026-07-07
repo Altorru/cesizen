@@ -14,6 +14,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version
+        id: version
+        run: |
+          if [ -f .version ]; then
+            VERSION=$(cat .version)
+          else
+            VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+            VERSION=${VERSION#v}
+          fi
+          echo "app-version=$VERSION" >> $GITHUB_OUTPUT
+          echo "App Version: $VERSION"
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -53,11 +67,14 @@ jobs:
           lftp -e "set sftp:auto-confirm yes; mirror -R -v --only-newer --parallel=4 --exclude .git/ --exclude .github/ --exclude node_modules/ --exclude vendor/ --exclude storage/logs/ --exclude storage/framework/cache/ --exclude storage/framework/sessions/ --exclude storage/framework/views/ --exclude .env . ${{ secrets.APP_PATH }}; quit" -u "${{ secrets.SSH_USERNAME }}","${{ secrets.SSH_PASSWORD }}" sftp://"${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}"
 
       - name: Deploy on server
+        env:
+          APP_VERSION: ${{ steps.version.outputs.app-version }}
         run: |
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" <<'EOF'
           cd "${{ secrets.APP_PATH }}"
           
-          echo "📦 Déploiement en cours..."
+          APP_VERSION="${{ env.APP_VERSION }}"
+          echo "📦 Déploiement en cours... (Version: $APP_VERSION)"
           
           # Mettre l'application en maintenance
           php artisan down
@@ -97,8 +114,12 @@ jobs:
           # Redémarrer les queues
           php artisan queue:restart
           
+          # Enregistrer la version
+          echo "$APP_VERSION" > .version
+          echo "$APP_VERSION" > storage/version.txt 2>/dev/null || true
+          
           # Remettre l'application en ligne
           php artisan up
           
-          echo "✅ Déploiement terminé avec succès !"
+          echo "✅ Déploiement terminé avec succès (v$APP_VERSION) !"
           EOF
